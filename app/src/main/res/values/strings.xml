@@ -1,3 +1,9 @@
 <resources>
-    <string name="app_name">Food-Calendar</string>
+    <string name="app_name">FoodCalendar</string>
+    <string name="connexion">Connexion</string>
+    <string name="pseudo">Adresse e-mail</string>
+    <string name="motdepasse">Mot de passe</string>
+    <string name="inscription">INSCRIPTION</string>
+    <string name="s_inscrire">S\'inscrire</string>
+    <string name="confirmer_mdp">Confirmer votre mot de passe</string>
 </resources>
