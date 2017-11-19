@@ -251,12 +251,12 @@ public class Accueil extends AppCompatActivity {
         inputPassword = (EditText) findViewById(R.id.til_mdp);
 
         if (TextUtils.isEmpty(inputEmail.getText().toString().trim())){
-            Toast.makeText(Accueil.this, "Enregistrement a réussi ! Vous avez reçu un email de confirmation.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(Accueil.this, "Veuillez rentrer une adresse mail ! ", Toast.LENGTH_SHORT).show();
             return;
         }
 
         if (TextUtils.isEmpty(inputPassword.getText().toString().trim())) {
-            Toast.makeText(Accueil.this, "Enregistrement a réussi ! Vous avez reçu un email de confirmation.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(Accueil.this, "Veuillez renter un mot de passe !", Toast.LENGTH_SHORT).show();
             return;
         }
 
