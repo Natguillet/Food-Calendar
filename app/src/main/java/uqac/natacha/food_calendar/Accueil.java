@@ -277,9 +277,6 @@ public class Accueil extends AppCompatActivity {
 
                             ///
 
-
-
-
                             return;
                         }
                     }
