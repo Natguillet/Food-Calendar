@@ -1,5 +1,6 @@
 package uqac.natacha.food_calendar;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -181,5 +182,7 @@ public class Accueil extends AppCompatActivity {
      */
     public void onConnexionClick(View view) {
         //TODO Pierre
+        Intent intent = new Intent(this, CalendarActivity.class);
+        startActivity(intent);
     }
 }
