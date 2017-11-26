@@ -40,6 +40,8 @@ dependencies {
 
     compile 'com.github.bumptech.glide:glide:3.7.0'
     compile 'com.android.support:support-v4:26.1.0'
+
+    compile 'com.prolificinteractive:material-calendarview:1.4.3'
 }
 
 
