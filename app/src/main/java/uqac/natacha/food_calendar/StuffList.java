@@ -145,7 +145,7 @@ public class StuffList extends AppCompatActivity {
 
         @Override
         public View getView(int i, View view, ViewGroup viewGroup) {
-            view = getLayoutInflater().inflate(R.layout.custom_list_stuff,null);
+           view = getLayoutInflater().inflate(R.layout.custom_list_stuff,null);
             imageViewItem = (ImageView ) view.findViewById(R.id.imageViewItem);
             textViewNameItem = (TextView) view.findViewById(R.id.textView_name);
             textViewQuantityItem = (TextView) view.findViewById(R.id.textView_quantity);

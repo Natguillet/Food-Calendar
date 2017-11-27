@@ -16,13 +16,15 @@
             android:theme="@style/AppTheme" />
         <activity android:name=".DayActivity" />
         <activity android:name=".StuffList">
+
+        </activity>
+        <activity android:name=".Modele.ShoppingList">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Modele.RecipeList"></activity>
     </application>
 
 </manifest>
