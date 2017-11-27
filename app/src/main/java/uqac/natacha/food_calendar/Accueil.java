@@ -1,5 +1,6 @@
 package uqac.natacha.food_calendar;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputLayout;
@@ -272,10 +273,8 @@ public class Accueil extends AppCompatActivity {
                             Toast.makeText(Accueil.this, "L'identification a réussi !", Toast.LENGTH_SHORT).show();
 
 
-                            // GO TO MAIN HERE
-
-
-                            ///
+                            Intent intent = new Intent(Accueil.this, CalendarActivity.class);
+                            startActivity(intent);
 
                             return;
                         }
