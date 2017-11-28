@@ -9,7 +9,15 @@
         android:roundIcon="@mipmap/logo_app"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Accueil"></activity>
+        <activity android:name=".Accueil">
+
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>205
+        </activity>
         <activity
             android:name=".CalendarActivity"
             android:label="@string/title_activity_calendar"
@@ -19,11 +27,7 @@
 
         </activity>
         <activity android:name=".Modele.ShoppingList">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
     </application>
 

@@ -5,6 +5,8 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.ContextMenu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -30,6 +32,8 @@ public class ShoppingList extends AppCompatActivity {
     ListView shoppingList = null;
     private DatabaseReference mDatabase;
     private FloatingActionButton mFloatingActionButton;
+    List<String> exemple;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,11 +63,48 @@ public class ShoppingList extends AppCompatActivity {
         });
 
     }
+
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+
+
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
+        menu.setHeaderTitle(exemple.get(info.position));
+        getMenuInflater().inflate(R.menu.menu_option_shopping_list, menu);
+
+        super.onCreateContextMenu(menu, v, menuInfo);
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+
+
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+        int index = info.position;
+
+
+
+        switch (item.getItemId()){
+            case R.id.item_delete:
+
+                //supprimer l'item
+                break;
+
+
+        }
+
+
+
+        return super.onContextItemSelected(item);
+    }
+
+
+
+
     public void initDatabase(){
 
         shoppingList = (ListView) findViewById(R.id.listview_shoppingList);
 
-        List<String> exemple = new ArrayList<String>();
+       exemple = new ArrayList<String>();
         exemple.add("ShoppingList 1");
         exemple.add("ShoppingList 2");
         exemple.add("ShoppingList 3");
@@ -71,7 +112,7 @@ public class ShoppingList extends AppCompatActivity {
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(ShoppingList.this, android.R.layout.simple_list_item_1, exemple);
         shoppingList.setAdapter(adapter);
 
-        //mDatabase.push().setValue("ShoppingList 1");
+        /*//mDatabase.push().setValue("ShoppingList 1");
         HashMap<String,String> dataMap = new HashMap<>();
         dataMap.put("name", "ShoppingList1");
 
@@ -91,7 +132,7 @@ public class ShoppingList extends AppCompatActivity {
 
                 }
             }
-        });
+        });*/
 
     }
 
