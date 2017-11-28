@@ -191,9 +191,9 @@ public class Accueil extends AppCompatActivity {
     public void onInscriptionClick(View view) {
 
 
-         inputEmail = (EditText) findViewById(R.id.til_pseudo_inscription);
-        inputPassword = (EditText) findViewById(R.id.til_mdp_inscription);
-        inputPassword2 = (EditText) findViewById(R.id.til_mdp_inscription2);
+         inputEmail = (EditText) findViewById(R.id.eti_pseudo_inscription);
+        inputPassword = (EditText) findViewById(R.id.eti_mdp_inscription);
+        inputPassword2 = (EditText) findViewById(R.id.eti_mdp_inscription2);
 
         if (TextUtils.isEmpty(inputEmail.getText().toString().trim())) {
 
