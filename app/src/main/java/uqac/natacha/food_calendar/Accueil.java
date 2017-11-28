@@ -1,5 +1,6 @@
 package uqac.natacha.food_calendar;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputLayout;
@@ -23,6 +24,7 @@ import com.google.firebase.auth.FirebaseAuth;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import uqac.natacha.food_calendar.Modele.ShoppingList;
 
 /**
  * Created by Florian on 24/10/2017.
@@ -232,7 +234,10 @@ public class Accueil extends AppCompatActivity {
 
                         } else {
 
-                            Toast.makeText(Accueil.this, "Enregistrement a réussi ! Vous avez reçu un email de confirmation.", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(Accueil.this, "Enregistrement a réussi !", Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(Accueil.this, Accueil.class);
+                            startActivity(intent);
+
 
                         }
                     }
@@ -247,8 +252,8 @@ public class Accueil extends AppCompatActivity {
      */
     public void onConnexionClick(View view) {
 
-        inputEmail = (EditText) findViewById(R.id.til_pseudo);
-        inputPassword = (EditText) findViewById(R.id.til_mdp);
+        inputEmail = (EditText) findViewById(R.id.eti_pseudo);
+        inputPassword = (EditText) findViewById(R.id.eti_mdp);
 
         if (TextUtils.isEmpty(inputEmail.getText().toString().trim())){
             Toast.makeText(Accueil.this, "Veuillez rentrer une adresse mail ! ", Toast.LENGTH_SHORT).show();
@@ -272,10 +277,8 @@ public class Accueil extends AppCompatActivity {
                             Toast.makeText(Accueil.this, "L'identification a réussi !", Toast.LENGTH_SHORT).show();
 
 
-                            // GO TO MAIN HERE
-
-
-                            ///
+                            Intent intent = new Intent(Accueil.this, CalendarActivity.class);
+                            startActivity(intent);
 
                             return;
                         }
