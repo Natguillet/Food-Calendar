@@ -1,0 +1,63 @@
+{
+  "project_info": {
+    "project_number": "280995801784",
+    "firebase_url": "https://foodcalendar-d6491.firebaseio.com",
+    "project_id": "foodcalendar-d6491",
+    "storage_bucket": "foodcalendar-d6491.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:280995801784:android:1378ce41c446f1f7",
+        "android_client_info": {
+          "package_name": "uqac.natacha.food_calendar"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "280995801784-d8eaifbrb6j9s1op9k5g05hc2usj4816.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "uqac.natacha.food_calendar",
+            "certificate_hash": "fa20eec6d1db44ec6939321df63bcd604c090ee5"
+          }
+        },
+        {
+          "client_id": "280995801784-ta40hmitum4av38rm2j0up7ru5r33744.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "uqac.natacha.food_calendar",
+            "certificate_hash": "d4aaa10c8d37e14b508fda9823e56fc37690a0d5"
+          }
+        },
+        {
+          "client_id": "280995801784-psn5q8gn94jbnlshhpr1b39ic5t1e2kb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBDDqsUD5a7wbw32ds7Y1lNmV-pC-06I9E"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "280995801784-psn5q8gn94jbnlshhpr1b39ic5t1e2kb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
