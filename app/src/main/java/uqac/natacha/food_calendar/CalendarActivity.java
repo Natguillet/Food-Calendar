@@ -27,6 +27,7 @@ import java.text.SimpleDateFormat;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import uqac.natacha.food_calendar.Modele.ShoppingList;
 
 public class CalendarActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, OnDateSelectedListener {
@@ -120,6 +121,10 @@ public class CalendarActivity extends AppCompatActivity
         } else if (id == R.id.nav_recipe) {
 
         } else if (id == R.id.nav_shopping) {
+
+            Intent intent = new Intent(CalendarActivity.this, ShoppingList.class);
+            startActivity(intent);
+
 
         } else if (id == R.id.nav_settings) {
 

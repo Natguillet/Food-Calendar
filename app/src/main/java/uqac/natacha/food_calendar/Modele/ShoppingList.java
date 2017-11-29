@@ -16,6 +16,8 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -32,6 +34,8 @@ public class ShoppingList extends AppCompatActivity {
     ListView shoppingList = null;
     private DatabaseReference mDatabase;
     private FloatingActionButton mFloatingActionButton;
+
+
     List<String> exemple;
 
 
@@ -44,7 +48,10 @@ public class ShoppingList extends AppCompatActivity {
 
         initDatabase();
 
-        mDatabase = FirebaseDatabase.getInstance().getReference().child("ShoppingList");
+        //instantiate reference of database
+        mDatabase =  FirebaseDatabase.getInstance().getReference();
+
+
 
         shoppingList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

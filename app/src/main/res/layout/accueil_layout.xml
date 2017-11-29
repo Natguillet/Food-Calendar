@@ -58,7 +58,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/pseudo"
-            android:inputType="text"
+            android:inputType="textEmailAddress"
             android:textColor="@color/colorFontDark" />
     </android.support.design.widget.TextInputLayout>
 
@@ -216,7 +216,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/pseudo"
-                android:inputType="text"
+                android:inputType="textEmailAddress"
                 android:textColor="@color/colorFontDark" />
         </android.support.design.widget.TextInputLayout>
 

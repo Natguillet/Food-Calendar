@@ -1,5 +1,6 @@
 package uqac.natacha.food_calendar;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -21,10 +22,16 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import uqac.natacha.food_calendar.Modele.ShoppingList;
+import uqac.natacha.food_calendar.Modele.Utilisateur;
 
 /**
  * Created by Florian on 24/10/2017.
@@ -34,6 +41,10 @@ import uqac.natacha.food_calendar.Modele.ShoppingList;
 public class Accueil extends AppCompatActivity {
 
     private static final String TAG = "Accueil";
+
+
+    private DatabaseReference mDatabase;
+    private DatabaseReference users;
 
     // --------------------------------------------------------------------------------------------
     // INFO POUR PIERRE :
@@ -74,6 +85,7 @@ public class Accueil extends AppCompatActivity {
 
         //on récupère l'utilisateur courant
         auth = FirebaseAuth.getInstance();
+
 
     }
 
@@ -234,9 +246,8 @@ public class Accueil extends AppCompatActivity {
 
                         } else {
 
-                            Toast.makeText(Accueil.this, "Enregistrement a réussi !", Toast.LENGTH_SHORT).show();
-                            Intent intent = new Intent(Accueil.this, Accueil.class);
-                            startActivity(intent);
+                            signup(inputEmail.getText().toString());
+
 
 
                         }
@@ -244,6 +255,40 @@ public class Accueil extends AppCompatActivity {
                 });
 
         //TODO Pierre
+    }
+
+    private void signup(final String email){
+
+
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+
+        final  DatabaseReference  table_user = database.getReference().child("User");
+       // final DatabaseReference table_user = database.getReference("User");
+        final FirebaseAuth auth = FirebaseAuth.getInstance();
+        FirebaseUser currentFirebaseUser = auth.getCurrentUser() ;
+
+        // On récuper l'ID unique de l'utilisateur qui sera la clé dans la base de donnée
+        final String currentFirebaseUserID = currentFirebaseUser.getUid() ;
+        Toast.makeText(this, "" + currentFirebaseUserID, Toast.LENGTH_SHORT).show();
+
+        // check if already user
+        // Il faudra faire ça avec l'adresse mail
+        // verifier si l'adresse mail est déja dans la bdd
+
+
+        // Sinon on créer un nouvel  objetutilisateur
+        Utilisateur utilisateur = new Utilisateur(email, currentFirebaseUserID);
+        // on créer un nouvel utilisateur
+
+       table_user.child(currentFirebaseUserID).setValue(utilisateur);
+
+        Toast.makeText(Accueil.this, "Enregistrement a réussi !", Toast.LENGTH_SHORT).show();
+
+
+        Intent intent = new Intent(Accueil.this, Accueil.class);
+        startActivity(intent);
+
+        finish();
     }
 
     /**
@@ -276,9 +321,8 @@ public class Accueil extends AppCompatActivity {
                         } else {
                             Toast.makeText(Accueil.this, "L'identification a réussi !", Toast.LENGTH_SHORT).show();
 
+                            signIn();
 
-                            Intent intent = new Intent(Accueil.this, CalendarActivity.class);
-                            startActivity(intent);
 
                             return;
                         }
@@ -286,4 +330,42 @@ public class Accueil extends AppCompatActivity {
                 });
 
     }
+
+private void signIn(){
+
+
+    final FirebaseDatabase database = FirebaseDatabase.getInstance();
+    final DatabaseReference table_user = database.getReference("User");
+
+    final FirebaseAuth auth = FirebaseAuth.getInstance();
+    FirebaseUser currentFirebaseUser = auth.getCurrentUser() ;
+    final String currentFirebaseUserID = currentFirebaseUser.getUid();
+
+    table_user.addValueEventListener(new ValueEventListener() {
+        @Override
+        public void onDataChange(DataSnapshot dataSnapshot) {
+
+            //get user information
+            Utilisateur utilisateur = dataSnapshot.child(currentFirebaseUserID).getValue(Utilisateur.class);
+
+            Intent intent = new Intent(Accueil.this, CalendarActivity.class);
+            startActivity(intent);
+            finish();
+
+        }
+
+        @Override
+        public void onCancelled(DatabaseError databaseError) {
+
+
+
+
+        }
+    });
+
+
+
+}
+
+
 }
