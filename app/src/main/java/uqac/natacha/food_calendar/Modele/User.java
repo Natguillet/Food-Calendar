@@ -2,8 +2,6 @@ package uqac.natacha.food_calendar.Modele;
 
 import com.google.firebase.database.Exclude;
 
-import java.util.Set;
-
 /**
  * Created by Natiassa on 2017-11-30.
  */
@@ -13,7 +11,7 @@ public class User {
     @Exclude
     private String uid;
 
-    private String username;
+    private String email;
     private String gender;
     private String levelActivity;
     private int nbMeals;
@@ -22,14 +20,19 @@ public class User {
 
     public User() {}
 
-    public User(String uid, String username, String gender, String levelActivity, int nbMeals, double weight, int size) {
+    public User(String uid, String email, String gender, String levelActivity, int nbMeals, double weight, int size) {
         this.uid = uid;
-        this.username = username;
+        this.email = email;
         this.gender = gender;
         this.levelActivity = levelActivity;
         this.nbMeals = nbMeals;
         this.weight = weight;
         this.size = size;
+    }
+
+    public User(String uid, String email) {
+        this.uid = uid;
+        this.email = email;
     }
 
     public String getUid() {
@@ -41,7 +44,7 @@ public class User {
         return this;
     }
 
-    public Boolean hasUsername(){
-        return username != null;
+    public Boolean hasEmail(){
+        return email != null;
     }
 }

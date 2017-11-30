@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
@@ -18,13 +19,19 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import uqac.natacha.food_calendar.Database.DatabaseManager;
+import uqac.natacha.food_calendar.Modele.User;
 
 /**
  * Created by Florian on 24/10/2017.
@@ -56,9 +63,14 @@ public class LoginActivity extends AppCompatActivity {
 
     private boolean estEnHaut = false;
     private int angleRotation = 0;
+
     private FirebaseAuth auth;
-    private FirebaseUser user;
+    private FirebaseUser firebaseUser;
+    private FirebaseAuth.AuthStateListener authListener;
+
     private EditText inputEmail, inputPassword, inputPassword2;
+
+    private DatabaseManager db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,7 +87,19 @@ public class LoginActivity extends AppCompatActivity {
 
         //on récupère l'utilisateur courant
         auth = FirebaseAuth.getInstance();
+        db = DatabaseManager.getInstance();
 
+        authListener = new FirebaseAuth.AuthStateListener()
+        {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth)
+            {
+                firebaseUser = firebaseAuth.getCurrentUser();
+                if (firebaseUser == null) {
+                    finish();
+                }
+            }
+        };
     }
 
 
@@ -227,24 +251,33 @@ public class LoginActivity extends AppCompatActivity {
                 .addOnCompleteListener( new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-
-
                         if (!task.isSuccessful()) {
                             Toast.makeText(LoginActivity.this, "L'enregistrement a échoué. Veuillez essayer avec une autre adresse mail.", Toast.LENGTH_SHORT).show();
                             return;
 
-                        } else {
-
-                            Toast.makeText(LoginActivity.this, "Enregistrement a réussi !", Toast.LENGTH_SHORT).show();
-                            Intent intent = new Intent(LoginActivity.this, LoginActivity.class);
-                            startActivity(intent);
-
-
+                        } else if (firebaseUser != null){
+                            db.setUser(new User(firebaseUser.getUid(), inputEmail.getText().toString()))
+                                    .addOnSuccessListener(new OnSuccessListener<Void>()
+                                    {
+                                        @Override
+                                        public void onSuccess(Void aVoid)
+                                        {
+                                            Log.i("succes", "enregistrement réussi");
+                                            startActivity(new Intent(LoginActivity.this, LoginActivity.class));
+                                            finish();
+                                        }
+                                    })
+                                    .addOnFailureListener(new OnFailureListener()
+                                    {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e)
+                                        {
+                                            Log.d("Erreur", e.getMessage());
+                                        }
+                                    });
                         }
                     }
                 });
-
-        //TODO Pierre
     }
 
     /**

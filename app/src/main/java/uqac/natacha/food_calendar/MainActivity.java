@@ -5,7 +5,6 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -44,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
                         @Override
                         public void onSuccess(User user)
                         {
-                            if (!user.hasUsername()) {
+                            if (!user.hasEmail()) {
                                 startActivity(new Intent(MainActivity.this, RegisterActivity.class));
                             } else {
                                 startActivity(new Intent(MainActivity.this, CalendarActivity.class));
@@ -54,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
                         @Override
                         public void onFailure()
                         {
-                            Log.e("ERREUR", "User don't exist");
+                            Log.i("User:", "User don't exist");
                             startActivity(new Intent(MainActivity.this, LoginActivity.class));
                         }
                     });
