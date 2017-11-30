@@ -110,19 +110,11 @@ public class DatabaseManager {
     {
         private DatabaseReference database;
         private DatabaseReference users;
-        private DatabaseReference usernames;
-        private DatabaseReference adverts;
-        private DatabaseReference bids;
-        private DatabaseReference jobs;
 
         Reference()
         {
             database = FirebaseDatabase.getInstance().getReference();
             users = database.child(USERS);
-            /*usernames = database.child(USERNAMES);
-            adverts = database.child(ADVERTS);
-            bids = database.child(BIDS);
-            jobs = database.child(JOBS);*/
         }
     }
 

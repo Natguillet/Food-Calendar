@@ -25,8 +25,6 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -102,8 +100,19 @@ public class LoginActivity extends AppCompatActivity {
         };
     }
 
+    @Override
+    public void onResume()
+    {
+        super.onResume();
+        auth.addAuthStateListener(authListener);
+    }
 
-
+    @Override
+    public void onPause()
+    {
+        super.onPause();
+        auth.removeAuthStateListener(authListener);
+    }
 
     @Override
     public void onBackPressed() {
@@ -248,21 +257,20 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         auth.createUserWithEmailAndPassword(inputEmail.getText().toString().trim(), inputPassword.getText().toString().trim())
-                .addOnCompleteListener( new OnCompleteListener<AuthResult>() {
+                .addOnSuccessListener(new OnSuccessListener<AuthResult>()
+                {
                     @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (!task.isSuccessful()) {
-                            Toast.makeText(LoginActivity.this, "L'enregistrement a échoué. Veuillez essayer avec une autre adresse mail.", Toast.LENGTH_SHORT).show();
-                            return;
-
-                        } else if (firebaseUser != null){
+                    public void onSuccess(AuthResult authResult) {
+                        Log.i("succes", "enregistrement authen");
+                        Log.i("user", " " + firebaseUser);
+                        if (firebaseUser != null){
                             db.setUser(new User(firebaseUser.getUid(), inputEmail.getText().toString()))
                                     .addOnSuccessListener(new OnSuccessListener<Void>()
                                     {
                                         @Override
                                         public void onSuccess(Void aVoid)
                                         {
-                                            Log.i("succes", "enregistrement réussi");
+                                            Log.i("succes", "enregistrement bd réussi");
                                             startActivity(new Intent(LoginActivity.this, LoginActivity.class));
                                             finish();
                                         }
@@ -276,6 +284,13 @@ public class LoginActivity extends AppCompatActivity {
                                         }
                                     });
                         }
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.d("SOS DO IT", e.getMessage());
+                        Toast.makeText(LoginActivity.this, "L'enregistrement a échoué. Veuillez essayer avec une autre adresse mail.", Toast.LENGTH_SHORT).show();
                     }
                 });
     }
