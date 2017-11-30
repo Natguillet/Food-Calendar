@@ -262,9 +262,9 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onSuccess(AuthResult authResult) {
                         Log.i("succes", "enregistrement authen");
-                        Log.i("user", " " + firebaseUser);
                         if (firebaseUser != null){
-                            db.setUser(new User(firebaseUser.getUid(), inputEmail.getText().toString()))
+                            String email = inputEmail.getText().toString();
+                            db.setUser(new User(firebaseUser.getUid(), email))
                                     .addOnSuccessListener(new OnSuccessListener<Void>()
                                     {
                                         @Override
