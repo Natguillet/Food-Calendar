@@ -3,13 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Food-Calendar.iml" filepath="$PROJECT_DIR$/Food-Calendar.iml" />
-      <module fileurl="file://D:\Users\Natiassa\StudioProjects\Food-Calendar\.idea\Food-Calendar.iml" filepath="D:\Users\Natiassa\StudioProjects\Food-Calendar\.idea\Food-Calendar.iml" />
-      <module fileurl="file://D:\Projet_AndroidStudio\OOP_FoodCalendar\Food-Calendar.iml" filepath="D:\Projet_AndroidStudio\OOP_FoodCalendar\Food-Calendar.iml" />
-      <module fileurl="file://D:\Users\Natiassa\StudioProjects\Food-Calendar\FoodCalendar.iml" filepath="D:\Users\Natiassa\StudioProjects\Food-Calendar\FoodCalendar.iml" />
-      <module fileurl="file://D:\UQAC\P.O.O\projet\Food Calendar\Food-Calendar\.idea\OOP_FoodCalendar.iml" filepath="D:\UQAC\P.O.O\projet\Food Calendar\Food-Calendar\.idea\OOP_FoodCalendar.iml" />
-      <module fileurl="file://D:\Users\Natiassa\StudioProjects\Food-Calendar\StudioProjects-Food-Calendar.iml" filepath="D:\Users\Natiassa\StudioProjects\Food-Calendar\StudioProjects-Food-Calendar.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://D:\Projet_AndroidStudio\OOP_FoodCalendar\app\app.iml" filepath="D:\Projet_AndroidStudio\OOP_FoodCalendar\app\app.iml" />
     </modules>
   </component>
 </project>
