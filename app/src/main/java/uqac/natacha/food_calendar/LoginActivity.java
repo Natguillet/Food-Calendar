@@ -1,6 +1,5 @@
 package uqac.natacha.food_calendar;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -20,22 +19,17 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-
-import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import uqac.natacha.food_calendar.Modele.ListeDeCourse;
-import uqac.natacha.food_calendar.Modele.Utilisateur;
+import uqac.natacha.food_calendar.Database.DatabaseManager;
+import uqac.natacha.food_calendar.Modele.User;
 
 /**
  * Created by Florian on 24/10/2017.
@@ -44,12 +38,7 @@ import uqac.natacha.food_calendar.Modele.Utilisateur;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private static final String TAG = "Accueil";
-
-
-    private DatabaseReference mDatabase;
-    private DatabaseReference users;
-    private   DatabaseReference table_user;
+    private static final String TAG = "LoginActivity";
 
     // --------------------------------------------------------------------------------------------
     // INFO POUR PIERRE :
@@ -72,8 +61,14 @@ public class LoginActivity extends AppCompatActivity {
 
     private boolean estEnHaut = false;
     private int angleRotation = 0;
+
     private FirebaseAuth auth;
+    private FirebaseUser firebaseUser;
+    private FirebaseAuth.AuthStateListener authListener;
+
     private EditText inputEmail, inputPassword, inputPassword2;
+
+    private DatabaseManager db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,12 +85,34 @@ public class LoginActivity extends AppCompatActivity {
 
         //on récupère l'utilisateur courant
         auth = FirebaseAuth.getInstance();
+        db = DatabaseManager.getInstance();
 
-
+        authListener = new FirebaseAuth.AuthStateListener()
+        {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth)
+            {
+                firebaseUser = firebaseAuth.getCurrentUser();
+                if (firebaseUser == null) {
+                    finish();
+                }
+            }
+        };
     }
 
+    @Override
+    public void onResume()
+    {
+        super.onResume();
+        auth.addAuthStateListener(authListener);
+    }
 
-
+    @Override
+    public void onPause()
+    {
+        super.onPause();
+        auth.removeAuthStateListener(authListener);
+    }
 
     @Override
     public void onBackPressed() {
@@ -209,7 +226,7 @@ public class LoginActivity extends AppCompatActivity {
     public void onInscriptionClick(View view) {
 
 
-         inputEmail = (EditText) findViewById(R.id.eti_pseudo_inscription);
+        inputEmail = (EditText) findViewById(R.id.eti_pseudo_inscription);
         inputPassword = (EditText) findViewById(R.id.eti_mdp_inscription);
         inputPassword2 = (EditText) findViewById(R.id.eti_mdp_inscription2);
 
@@ -240,61 +257,42 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         auth.createUserWithEmailAndPassword(inputEmail.getText().toString().trim(), inputPassword.getText().toString().trim())
-                .addOnCompleteListener( new OnCompleteListener<AuthResult>() {
+                .addOnSuccessListener(new OnSuccessListener<AuthResult>()
+                {
                     @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-
-
-                        if (!task.isSuccessful()) {
-                            Toast.makeText(LoginActivity.this, "L'enregistrement a échoué. Veuillez essayer avec une autre adresse mail.", Toast.LENGTH_SHORT).show();
-                            return;
-
-                        } else {
-
-                            signup(inputEmail.getText().toString());
-
-
-
+                    public void onSuccess(AuthResult authResult) {
+                        Log.i("succes", "enregistrement authen");
+                        if (firebaseUser != null){
+                            String email = inputEmail.getText().toString();
+                            db.setUser(new User(firebaseUser.getUid(), email))
+                                    .addOnSuccessListener(new OnSuccessListener<Void>()
+                                    {
+                                        @Override
+                                        public void onSuccess(Void aVoid)
+                                        {
+                                            Log.i("succes", "enregistrement bd réussi");
+                                            startActivity(new Intent(LoginActivity.this, LoginActivity.class));
+                                            finish();
+                                        }
+                                    })
+                                    .addOnFailureListener(new OnFailureListener()
+                                    {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e)
+                                        {
+                                            Log.d("Erreur", e.getMessage());
+                                        }
+                                    });
                         }
                     }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.d("SOS DO IT", e.getMessage());
+                        Toast.makeText(LoginActivity.this, "L'enregistrement a échoué. Veuillez essayer avec une autre adresse mail.", Toast.LENGTH_SHORT).show();
+                    }
                 });
-
-        //TODO Pierre
-    }
-
-    private void signup(final String email){
-
-
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-
-        final  DatabaseReference  table_user = database.getReference().child("User");
-       // final DatabaseReference table_user = database.getReference("User");
-        final FirebaseAuth auth = FirebaseAuth.getInstance();
-        FirebaseUser currentFirebaseUser = auth.getCurrentUser() ;
-
-        // On récuper l'ID unique de l'utilisateur qui sera la clé dans la base de donnée
-        final String currentFirebaseUserID = currentFirebaseUser.getUid() ;
-        Toast.makeText(this, "" + currentFirebaseUserID, Toast.LENGTH_SHORT).show();
-
-        // check if already users
-        // Il faudra faire ça avec l'adresse mail
-        // verifier si l'adresse mail est déja dans la bdd
-        ArrayList<ListeDeCourse> listeDeCourseTadam = new ArrayList<>();
-        listeDeCourseTadam.add(new ListeDeCourse("Exemple"));
-
-        // Sinon on créer un nouvel  objetutilisateur
-        Utilisateur utilisateur = new Utilisateur(email, currentFirebaseUserID,listeDeCourseTadam);
-        // on créer un nouvel utilisateur
-
-        table_user.child(currentFirebaseUserID).setValue(utilisateur);
-
-        Toast.makeText(LoginActivity.this, "Enregistrement a réussi !", Toast.LENGTH_SHORT).show();
-
-
-        Intent intent = new Intent(LoginActivity.this, LoginActivity.class);
-        startActivity(intent);
-
-        finish();
     }
 
     /**
@@ -327,8 +325,9 @@ public class LoginActivity extends AppCompatActivity {
                         } else {
                             Toast.makeText(LoginActivity.this, "L'identification a réussi !", Toast.LENGTH_SHORT).show();
 
-                            signIn();
 
+                            Intent intent = new Intent(LoginActivity.this, CalendarActivity.class);
+                            startActivity(intent);
 
                             return;
                         }
@@ -336,47 +335,4 @@ public class LoginActivity extends AppCompatActivity {
                 });
 
     }
-
-private void signIn(){
-
-
-    final FirebaseDatabase database = FirebaseDatabase.getInstance();
-   table_user = database.getReference("User");
-    final FirebaseAuth auth = FirebaseAuth.getInstance();
-    FirebaseUser currentFirebaseUser = auth.getCurrentUser() ;
-    final String currentFirebaseUserID = currentFirebaseUser.getUid();
-
-    table_user.addListenerForSingleValueEvent(new ValueEventListener() {
-        @Override
-        public void onDataChange(DataSnapshot dataSnapshot) {
-
-            //get user information
-            //Utilisateur utilisateur = dataSnapshot.getValue(Utilisateur.class);
-            Utilisateur utilisateur = dataSnapshot.child(currentFirebaseUserID).getValue(Utilisateur.class);
-            Log.i("SIGNIN", " BLABLABLABLABLABLABLBALBLABLABLABLABLABLABLBALBLABLABLABLABLABLABLBALBLABLABLABLABLABLABLBALBLABLABLABLABLABLABLBALBLABLABLABLABLABLABLBALBLABLABLABLABLABLABLBALBLABLABLABLABLABLABLBALBLABLABLABLABLABLABLBALBLABLABLABLABLABLABLBALBLABLABLABLABLABLABLBALBLABLABLABLABLABLABLBALBLABLABLABLABLABLABLBALBLABLABLABLABLABLABLBALBLABLABLABLABLABLABLBALBLABLABLABLABLABLABLBALBLABLABLABLABLABLABLBAL");
-
-            Intent intent = new Intent(LoginActivity.this, CalendarActivity.class);
-            startActivity(intent);
-            finish();
-
-        }
-
-        @Override
-        public void onCancelled(DatabaseError databaseError) {
-
-
-
-
-        }
-
-
-
-    });
-
-
-
-}
-
-
-
 }
