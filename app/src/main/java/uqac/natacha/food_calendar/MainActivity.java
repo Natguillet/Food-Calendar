@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -32,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+                Log.i("SIGNIN", " " + firebaseUser);
                 if (firebaseUser == null) {
                     startActivity(new Intent(getApplicationContext(), LoginActivity.class));
                     finish();
@@ -52,7 +54,8 @@ public class MainActivity extends AppCompatActivity {
                         @Override
                         public void onFailure()
                         {
-                            startActivity(new Intent(MainActivity.this, RegisterActivity.class));
+                            Log.e("ERREUR", "User don't exist");
+                            startActivity(new Intent(MainActivity.this, LoginActivity.class));
                         }
                     });
                 }
