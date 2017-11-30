@@ -42,7 +42,7 @@ import uqac.natacha.food_calendar.Modele.Utilisateur;
  */
 
 
-public class Accueil extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity {
 
     private static final String TAG = "Accueil";
 
@@ -215,27 +215,27 @@ public class Accueil extends AppCompatActivity {
 
         if (TextUtils.isEmpty(inputEmail.getText().toString().trim())) {
 
-            Toast.makeText(Accueil.this, "Veuillez rentrer une adresse mail", Toast.LENGTH_SHORT).show();
+            Toast.makeText(LoginActivity.this, "Veuillez rentrer une adresse mail", Toast.LENGTH_SHORT).show();
             return;
         }
 
         if (TextUtils.isEmpty(inputPassword.getText().toString().trim())) {
-            Toast.makeText(Accueil.this, "Veuillez rentrer un mot de passe", Toast.LENGTH_SHORT).show();
+            Toast.makeText(LoginActivity.this, "Veuillez rentrer un mot de passe", Toast.LENGTH_SHORT).show();
             return;
         }
 
         if (TextUtils.isEmpty(inputPassword2.getText().toString().trim())) {
-            Toast.makeText(Accueil.this, "Veuillez confirmer votre mot de passe", Toast.LENGTH_SHORT).show();
+            Toast.makeText(LoginActivity.this, "Veuillez confirmer votre mot de passe", Toast.LENGTH_SHORT).show();
             return;
         }
 
         if (inputPassword.getText().toString().trim().length() < 6) {
-            Toast.makeText(Accueil.this, "Veuillez rentrer un mot de passe d'au moins 6 caractères ! ", Toast.LENGTH_SHORT).show();
+            Toast.makeText(LoginActivity.this, "Veuillez rentrer un mot de passe d'au moins 6 caractères ! ", Toast.LENGTH_SHORT).show();
             return;
         }
 
         if (inputPassword.getText().toString().trim().length() != inputPassword2.getText().toString().trim().length()) {
-            Toast.makeText(Accueil.this, "Les deux mots de passe ne sont pas identiques", Toast.LENGTH_SHORT).show();
+            Toast.makeText(LoginActivity.this, "Les deux mots de passe ne sont pas identiques", Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -246,7 +246,7 @@ public class Accueil extends AppCompatActivity {
 
 
                         if (!task.isSuccessful()) {
-                            Toast.makeText(Accueil.this, "L'enregistrement a échoué. Veuillez essayer avec une autre adresse mail.", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(LoginActivity.this, "L'enregistrement a échoué. Veuillez essayer avec une autre adresse mail.", Toast.LENGTH_SHORT).show();
                             return;
 
                         } else {
@@ -288,10 +288,10 @@ public class Accueil extends AppCompatActivity {
 
         table_user.child(currentFirebaseUserID).setValue(utilisateur);
 
-        Toast.makeText(Accueil.this, "Enregistrement a réussi !", Toast.LENGTH_SHORT).show();
+        Toast.makeText(LoginActivity.this, "Enregistrement a réussi !", Toast.LENGTH_SHORT).show();
 
 
-        Intent intent = new Intent(Accueil.this, Accueil.class);
+        Intent intent = new Intent(LoginActivity.this, LoginActivity.class);
         startActivity(intent);
 
         finish();
@@ -307,12 +307,12 @@ public class Accueil extends AppCompatActivity {
         inputPassword = (EditText) findViewById(R.id.eti_mdp);
 
         if (TextUtils.isEmpty(inputEmail.getText().toString().trim())){
-            Toast.makeText(Accueil.this, "Veuillez rentrer une adresse mail ! ", Toast.LENGTH_SHORT).show();
+            Toast.makeText(LoginActivity.this, "Veuillez rentrer une adresse mail ! ", Toast.LENGTH_SHORT).show();
             return;
         }
 
         if (TextUtils.isEmpty(inputPassword.getText().toString().trim())) {
-            Toast.makeText(Accueil.this, "Veuillez renter un mot de passe !", Toast.LENGTH_SHORT).show();
+            Toast.makeText(LoginActivity.this, "Veuillez renter un mot de passe !", Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -322,10 +322,10 @@ public class Accueil extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (!task.isSuccessful()) {
-                            Toast.makeText(Accueil.this, "L'identification a échoué !", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(LoginActivity.this, "L'identification a échoué !", Toast.LENGTH_SHORT).show();
                             return;
                         } else {
-                            Toast.makeText(Accueil.this, "L'identification a réussi !", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(LoginActivity.this, "L'identification a réussi !", Toast.LENGTH_SHORT).show();
 
                             signIn();
 
@@ -355,7 +355,7 @@ private void signIn(){
             Utilisateur utilisateur = dataSnapshot.child(currentFirebaseUserID).getValue(Utilisateur.class);
             Log.i("SIGNIN", " BLABLABLABLABLABLABLBALBLABLABLABLABLABLABLBALBLABLABLABLABLABLABLBALBLABLABLABLABLABLABLBALBLABLABLABLABLABLABLBALBLABLABLABLABLABLABLBALBLABLABLABLABLABLABLBALBLABLABLABLABLABLABLBALBLABLABLABLABLABLABLBALBLABLABLABLABLABLABLBALBLABLABLABLABLABLABLBALBLABLABLABLABLABLABLBALBLABLABLABLABLABLABLBALBLABLABLABLABLABLABLBALBLABLABLABLABLABLABLBALBLABLABLABLABLABLABLBALBLABLABLABLABLABLABLBAL");
 
-            Intent intent = new Intent(Accueil.this, CalendarActivity.class);
+            Intent intent = new Intent(LoginActivity.this, CalendarActivity.class);
             startActivity(intent);
             finish();
 

@@ -11,7 +11,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import uqac.natacha.food_calendar.Accueil;
+import uqac.natacha.food_calendar.LoginActivity;
 import uqac.natacha.food_calendar.CalendarActivity;
 
 /**
