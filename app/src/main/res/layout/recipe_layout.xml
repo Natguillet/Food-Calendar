@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        android:fitsSystemWindows="true">
+
+        <android.support.design.widget.CollapsingToolbarLayout
+            android:layout_width="match_parent"
+            android:layout_height="350dp"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed"
+            app:contentScrim="@color/colorPrimary"
+            app:expandedTitleTextAppearance="@android:color/transparent">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:id="@+id/iv_image_recipe"
+                android:layout_height="350dp"
+                app:layout_collapseMode="parallax"
+                android:contentDescription="@string/app_name"
+                android:scaleType="centerCrop"/>
+            
+            <android.support.v7.widget.Toolbar
+                android:layout_width="match_parent"
+                android:id="@+id/tb_recipe"
+                android:layout_height="?attr/actionBarSize"
+                app:title="Titre"
+                app:layout_collapseMode="pin"/>
+                
+        </android.support.design.widget.CollapsingToolbarLayout>
+
+        
+    </android.support.design.widget.AppBarLayout>
+    
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clipToPadding="false"
+        android:paddingBottom="70dp"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                app:cardElevation="2dp"
+                app:cardUseCompatPadding="true">
+
+                    <android.support.constraint.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:id="@+id/textViewInfo"
+                            android:layout_width="wrap_content"
+                            android:layout_height="20dp"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginTop="8dp"
+                            android:text="@string/info"
+                            android:textSize="16sp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/textViewNumber"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="4 personnes"
+                            app:layout_constraintStart_toEndOf="@+id/imageViewNumber"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginTop="16dp"
+                            app:layout_constraintTop_toBottomOf="@+id/textViewInfo"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            android:layout_marginBottom="8dp"
+                            app:layout_constraintVertical_bias="0.0" />
+
+                        <ImageView
+                            android:id="@+id/imageViewNumber"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintTop_toTopOf="@+id/textViewNumber"
+                            app:srcCompat="@drawable/ic_restaurant_black_24dp"
+                            app:layout_constraintBottom_toBottomOf="@+id/textViewNumber"
+                            app:layout_constraintStart_toStartOf="parent"
+                            android:layout_marginStart="8dp"
+                            android:tint="@color/colorAccent"/>
+
+                        <TextView
+                            android:id="@+id/textViewDifficulty"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="2/5"
+                            app:layout_constraintStart_toEndOf="@+id/imageViewDifficulty"
+                            android:layout_marginTop="16dp"
+                            app:layout_constraintTop_toBottomOf="@+id/textViewInfo"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            android:layout_marginBottom="8dp"
+                            android:layout_marginStart="8dp" />
+
+                        <ImageView
+                            android:id="@+id/imageViewDifficulty"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:srcCompat="@drawable/ic_lightbulb_outline_black_24dp"
+                            app:layout_constraintBottom_toBottomOf="@+id/textViewDifficulty"
+                            app:layout_constraintStart_toEndOf="@+id/textViewNumber"
+                            android:layout_marginStart="16dp"
+                            app:layout_constraintTop_toTopOf="@+id/textViewDifficulty"
+                            android:tint="@color/colorAccent"/>
+
+
+                        <TextView
+                            android:id="@+id/textViewPreparation"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="20 mn"
+                            android:layout_marginTop="16dp"
+                            app:layout_constraintTop_toBottomOf="@+id/textViewInfo"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            android:layout_marginBottom="8dp"
+                            app:layout_constraintEnd_toStartOf="@+id/imageViewCooking"
+                            android:layout_marginEnd="16dp" />
+
+                        <ImageView
+                            android:id="@+id/imageViewPreparation"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:srcCompat="@drawable/ic_timelapse_black_24dp"
+                            app:layout_constraintBottom_toBottomOf="@+id/textViewPreparation"
+                            app:layout_constraintTop_toTopOf="@+id/textViewPreparation"
+                            app:layout_constraintEnd_toStartOf="@+id/textViewPreparation"
+                            android:layout_marginEnd="8dp"
+                            android:tint="@color/colorAccent"/>
+
+                        <TextView
+                            android:id="@+id/textViewCooking"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="30 mn"
+                            android:layout_marginTop="16dp"
+                            app:layout_constraintTop_toBottomOf="@+id/textViewInfo"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            android:layout_marginBottom="8dp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            android:layout_marginEnd="8dp" />
+
+                        <ImageView
+                            android:id="@+id/imageViewCooking"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:srcCompat="@drawable/ic_access_alarm_black_24dp"
+                            app:layout_constraintBottom_toBottomOf="@+id/textViewCooking"
+                            app:layout_constraintTop_toTopOf="@+id/textViewCooking"
+                            app:layout_constraintEnd_toStartOf="@+id/textViewCooking"
+                            android:layout_marginEnd="8dp"
+                            android:tint="@color/colorAccent"/>
+
+                    </android.support.constraint.ConstraintLayout>
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardElevation="2dp"
+                app:cardUseCompatPadding="true">
+
+                <android.support.constraint.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="8dp">
+
+                    <TextView
+                        android:id="@+id/textViewIngredient"
+                        android:layout_width="wrap_content"
+                        android:layout_height="20dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        android:text="@string/ingredients"
+                        android:textSize="16sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <LinearLayout
+                        android:id="@+id/llIngredients"
+                        app:layout_constraintTop_toBottomOf="@id/textViewIngredient"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_marginTop="8dp">
+                    </LinearLayout>
+                </android.support.constraint.ConstraintLayout>
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                app:cardElevation="2dp"
+                app:cardUseCompatPadding="true">
+
+                <android.support.constraint.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="8dp">
+
+                    <TextView
+                        android:id="@+id/textViewInstruction"
+                        android:layout_width="wrap_content"
+                        android:layout_height="20dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        android:text="@string/instructions"
+                        android:textSize="16sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <LinearLayout
+                        android:id="@+id/llIstructions"
+                        app:layout_constraintTop_toBottomOf="@id/textViewInstruction"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_marginTop="16dp">
+                    </LinearLayout>
+                </android.support.constraint.ConstraintLayout>
+            </android.support.v7.widget.CardView>
+        </LinearLayout>
+
+
+    </android.support.v4.widget.NestedScrollView>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/floatingActionButton"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:clickable="true"
+        app:srcCompat="@drawable/ic_add"
+        android:onClick="addRecipeToMenu"
+        android:layout_gravity="bottom|right"
+        android:layout_marginBottom="20dp"
+        android:layout_marginEnd="20dp"
+        app:backgroundTint="@color/colorPrimary" />
+
+
+</android.support.design.widget.CoordinatorLayout>

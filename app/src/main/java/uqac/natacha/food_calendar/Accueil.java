@@ -1,8 +1,10 @@
 package uqac.natacha.food_calendar;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
@@ -12,6 +14,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -59,7 +65,6 @@ public class Accueil extends AppCompatActivity {
 
         //
         myView.setVisibility(View.INVISIBLE);
-
     }
 
     @Override
@@ -181,5 +186,7 @@ public class Accueil extends AppCompatActivity {
      */
     public void onConnexionClick(View view) {
         //TODO Pierre
+        Intent intent = new Intent(this, RecipeCategories.class);
+        startActivity(intent);
     }
 }

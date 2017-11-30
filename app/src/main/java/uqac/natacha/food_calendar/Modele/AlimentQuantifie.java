@@ -10,6 +10,9 @@ public class AlimentQuantifie {
     private Aliment aliment;
     private double  quantite;
 
+    public AlimentQuantifie() {
+    }
+
     /**
      * Constructeur de la classe AlimentQuantifie
      * @param aliment aliment de base
