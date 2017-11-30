@@ -7,6 +7,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
@@ -29,8 +30,11 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import uqac.natacha.food_calendar.Modele.ListeDeCourse;
 import uqac.natacha.food_calendar.Modele.Utilisateur;
 
 /**
@@ -45,6 +49,7 @@ public class Accueil extends AppCompatActivity {
 
     private DatabaseReference mDatabase;
     private DatabaseReference users;
+    private   DatabaseReference table_user;
 
     // --------------------------------------------------------------------------------------------
     // INFO POUR PIERRE :
@@ -271,16 +276,17 @@ public class Accueil extends AppCompatActivity {
         final String currentFirebaseUserID = currentFirebaseUser.getUid() ;
         Toast.makeText(this, "" + currentFirebaseUserID, Toast.LENGTH_SHORT).show();
 
-        // check if already user
+        // check if already users
         // Il faudra faire ça avec l'adresse mail
         // verifier si l'adresse mail est déja dans la bdd
-
+        ArrayList<ListeDeCourse> listeDeCourseTadam = new ArrayList<>();
+        listeDeCourseTadam.add(new ListeDeCourse("Exemple"));
 
         // Sinon on créer un nouvel  objetutilisateur
-        Utilisateur utilisateur = new Utilisateur(email, currentFirebaseUserID);
+        Utilisateur utilisateur = new Utilisateur(email, currentFirebaseUserID,listeDeCourseTadam);
         // on créer un nouvel utilisateur
 
-       table_user.child(currentFirebaseUserID).setValue(utilisateur);
+        table_user.child(currentFirebaseUserID).setValue(utilisateur);
 
         Toast.makeText(Accueil.this, "Enregistrement a réussi !", Toast.LENGTH_SHORT).show();
 
@@ -335,18 +341,19 @@ private void signIn(){
 
 
     final FirebaseDatabase database = FirebaseDatabase.getInstance();
-    final DatabaseReference table_user = database.getReference("User");
-
+   table_user = database.getReference("User");
     final FirebaseAuth auth = FirebaseAuth.getInstance();
     FirebaseUser currentFirebaseUser = auth.getCurrentUser() ;
     final String currentFirebaseUserID = currentFirebaseUser.getUid();
 
-    table_user.addValueEventListener(new ValueEventListener() {
+    table_user.addListenerForSingleValueEvent(new ValueEventListener() {
         @Override
         public void onDataChange(DataSnapshot dataSnapshot) {
 
             //get user information
+            //Utilisateur utilisateur = dataSnapshot.getValue(Utilisateur.class);
             Utilisateur utilisateur = dataSnapshot.child(currentFirebaseUserID).getValue(Utilisateur.class);
+            Log.i("SIGNIN", " BLABLABLABLABLABLABLBALBLABLABLABLABLABLABLBALBLABLABLABLABLABLABLBALBLABLABLABLABLABLABLBALBLABLABLABLABLABLABLBALBLABLABLABLABLABLABLBALBLABLABLABLABLABLABLBALBLABLABLABLABLABLABLBALBLABLABLABLABLABLABLBALBLABLABLABLABLABLABLBALBLABLABLABLABLABLABLBALBLABLABLABLABLABLABLBALBLABLABLABLABLABLABLBALBLABLABLABLABLABLABLBALBLABLABLABLABLABLABLBALBLABLABLABLABLABLABLBALBLABLABLABLABLABLABLBAL");
 
             Intent intent = new Intent(Accueil.this, CalendarActivity.class);
             startActivity(intent);
@@ -361,11 +368,15 @@ private void signIn(){
 
 
         }
+
+
+
     });
 
 
 
 }
+
 
 
 }
