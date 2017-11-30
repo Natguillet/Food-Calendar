@@ -62,10 +62,6 @@ public class StuffList extends AppCompatActivity {
 
         buttonAddStuff = (Button) findViewById(R.id.button_addStuff) ;
 
-
-
-
-
         buttonAddStuff.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -21,19 +21,19 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import uqac.natacha.food_calendar.Modele.ShoppingList;
 
 /**
  * Created by Florian on 24/10/2017.
  */
 
 
-public class Accueil extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity {
 
-    private static final String TAG = "Accueil";
+    private static final String TAG = "LoginActivity";
 
     // --------------------------------------------------------------------------------------------
     // INFO POUR PIERRE :
@@ -57,6 +57,7 @@ public class Accueil extends AppCompatActivity {
     private boolean estEnHaut = false;
     private int angleRotation = 0;
     private FirebaseAuth auth;
+    private FirebaseUser user;
     private EditText inputEmail, inputPassword, inputPassword2;
 
     @Override
@@ -192,33 +193,33 @@ public class Accueil extends AppCompatActivity {
     public void onInscriptionClick(View view) {
 
 
-         inputEmail = (EditText) findViewById(R.id.eti_pseudo_inscription);
+        inputEmail = (EditText) findViewById(R.id.eti_pseudo_inscription);
         inputPassword = (EditText) findViewById(R.id.eti_mdp_inscription);
         inputPassword2 = (EditText) findViewById(R.id.eti_mdp_inscription2);
 
         if (TextUtils.isEmpty(inputEmail.getText().toString().trim())) {
 
-            Toast.makeText(Accueil.this, "Veuillez rentrer une adresse mail", Toast.LENGTH_SHORT).show();
+            Toast.makeText(LoginActivity.this, "Veuillez rentrer une adresse mail", Toast.LENGTH_SHORT).show();
             return;
         }
 
         if (TextUtils.isEmpty(inputPassword.getText().toString().trim())) {
-            Toast.makeText(Accueil.this, "Veuillez rentrer un mot de passe", Toast.LENGTH_SHORT).show();
+            Toast.makeText(LoginActivity.this, "Veuillez rentrer un mot de passe", Toast.LENGTH_SHORT).show();
             return;
         }
 
         if (TextUtils.isEmpty(inputPassword2.getText().toString().trim())) {
-            Toast.makeText(Accueil.this, "Veuillez confirmer votre mot de passe", Toast.LENGTH_SHORT).show();
+            Toast.makeText(LoginActivity.this, "Veuillez confirmer votre mot de passe", Toast.LENGTH_SHORT).show();
             return;
         }
 
         if (inputPassword.getText().toString().trim().length() < 6) {
-            Toast.makeText(Accueil.this, "Veuillez rentrer un mot de passe d'au moins 6 caractères ! ", Toast.LENGTH_SHORT).show();
+            Toast.makeText(LoginActivity.this, "Veuillez rentrer un mot de passe d'au moins 6 caractères ! ", Toast.LENGTH_SHORT).show();
             return;
         }
 
         if (inputPassword.getText().toString().trim().length() != inputPassword2.getText().toString().trim().length()) {
-            Toast.makeText(Accueil.this, "Les deux mots de passe ne sont pas identiques", Toast.LENGTH_SHORT).show();
+            Toast.makeText(LoginActivity.this, "Les deux mots de passe ne sont pas identiques", Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -229,13 +230,13 @@ public class Accueil extends AppCompatActivity {
 
 
                         if (!task.isSuccessful()) {
-                            Toast.makeText(Accueil.this, "L'enregistrement a échoué. Veuillez essayer avec une autre adresse mail.", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(LoginActivity.this, "L'enregistrement a échoué. Veuillez essayer avec une autre adresse mail.", Toast.LENGTH_SHORT).show();
                             return;
 
                         } else {
 
-                            Toast.makeText(Accueil.this, "Enregistrement a réussi !", Toast.LENGTH_SHORT).show();
-                            Intent intent = new Intent(Accueil.this, Accueil.class);
+                            Toast.makeText(LoginActivity.this, "Enregistrement a réussi !", Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(LoginActivity.this, LoginActivity.class);
                             startActivity(intent);
 
 
@@ -256,12 +257,12 @@ public class Accueil extends AppCompatActivity {
         inputPassword = (EditText) findViewById(R.id.eti_mdp);
 
         if (TextUtils.isEmpty(inputEmail.getText().toString().trim())){
-            Toast.makeText(Accueil.this, "Veuillez rentrer une adresse mail ! ", Toast.LENGTH_SHORT).show();
+            Toast.makeText(LoginActivity.this, "Veuillez rentrer une adresse mail ! ", Toast.LENGTH_SHORT).show();
             return;
         }
 
         if (TextUtils.isEmpty(inputPassword.getText().toString().trim())) {
-            Toast.makeText(Accueil.this, "Veuillez renter un mot de passe !", Toast.LENGTH_SHORT).show();
+            Toast.makeText(LoginActivity.this, "Veuillez renter un mot de passe !", Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -271,13 +272,13 @@ public class Accueil extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (!task.isSuccessful()) {
-                            Toast.makeText(Accueil.this, "L'identification a échoué !", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(LoginActivity.this, "L'identification a échoué !", Toast.LENGTH_SHORT).show();
                             return;
                         } else {
-                            Toast.makeText(Accueil.this, "L'identification a réussi !", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(LoginActivity.this, "L'identification a réussi !", Toast.LENGTH_SHORT).show();
 
 
-                            Intent intent = new Intent(Accueil.this, CalendarActivity.class);
+                            Intent intent = new Intent(LoginActivity.this, CalendarActivity.class);
                             startActivity(intent);
 
                             return;
