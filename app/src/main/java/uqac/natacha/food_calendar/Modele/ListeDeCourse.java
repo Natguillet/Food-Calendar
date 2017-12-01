@@ -10,8 +10,6 @@ import java.util.ArrayList;
 
 public class ListeDeCourse {
 
-
-
     private String nomListeDeCourse;
     private ArrayList<AlimentQuantifie> articles;
 
@@ -20,6 +18,7 @@ public class ListeDeCourse {
      */
     public ListeDeCourse() {
         this.articles = new ArrayList<>();
+        articles.add(new AlimentQuantifie(new Aliment("exemple", 1 , Unite.LITRE), 1 ));
     }
 
 
@@ -28,6 +27,7 @@ public class ListeDeCourse {
      */
     public ListeDeCourse(String nomListeDeCourse) {
         this.articles = new ArrayList<>();
+        articles.add(new AlimentQuantifie(new Aliment("exemple", 1 , Unite.LITRE), 1 ));
         this.nomListeDeCourse = nomListeDeCourse;
     }
 

@@ -25,6 +25,10 @@ public class Aliment {
     }
 
 
+    public Aliment() {
+    }
+
+
     /* ***************************************************************************************** **
      *                             G E T T E R    &    S E T T E R                                *
      * ***************************************************************************************** **/
@@ -39,5 +43,17 @@ public class Aliment {
 
     public Unite getUnite() {
         return unite;
+    }
+
+    public void setNom(String nom) {
+        this.nom = nom;
+    }
+
+    public void setCaloriesParUnite(double caloriesParUnite) {
+        this.caloriesParUnite = caloriesParUnite;
+    }
+
+    public void setUnite(Unite unite) {
+        this.unite = unite;
     }
 }

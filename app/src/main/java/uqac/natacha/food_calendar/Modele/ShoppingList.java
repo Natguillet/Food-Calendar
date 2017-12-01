@@ -26,6 +26,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -41,14 +42,9 @@ public class ShoppingList extends AppCompatActivity {
 
     ListView shoppingList = null;
     private FloatingActionButton mFloatingActionButton;
-     private  DatabaseManager databaseManager;
+    private User UtilisateurCourant ;
     private FirebaseAuth auth;
-    private FirebaseAuth.AuthStateListener authListener;
-    private String uid;
-
-
     private uqac.natacha.food_calendar.Database.DatabaseManager db;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,7 +57,7 @@ public class ShoppingList extends AppCompatActivity {
         shoppingList = (ListView) findViewById(R.id.listview_shoppingList);
 
 
-        addList();
+        printAdapterListOfShoppingList();
 
 
         shoppingList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -69,6 +65,8 @@ public class ShoppingList extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
                 Intent intent = new Intent(ShoppingList.this, StuffList.class);
+
+                intent.putExtra("position", position);
                 startActivity(intent);
             }
         });
@@ -97,7 +95,7 @@ public class ShoppingList extends AppCompatActivity {
                                     public void onClick(DialogInterface dialog,int id) {
 
                                         ListeDeCourse listeDeCourse = new ListeDeCourse(userInput.getText().toString());
-
+                                        addListeDeCourse(listeDeCourse);
 
 
                                     }
@@ -120,62 +118,77 @@ public class ShoppingList extends AppCompatActivity {
             }
         });
 
-        printAdapterListOfShoppingList();
+
+
+
+    }
+
+    private void  addListeDeCourse(final ListeDeCourse listeDeCourse){
+
+        auth = FirebaseAuth.getInstance();
+        FirebaseUser currentFirebaseUser = auth.getCurrentUser() ;
+        String currentFirebaseUserID = currentFirebaseUser.getUid();
+        db = uqac.natacha.food_calendar.Database.DatabaseManager.getInstance();
+        db.getUser(currentFirebaseUserID, new uqac.natacha.food_calendar.Database.DatabaseManager.Result<User>() {
+            @Override
+            public void onSuccess(User user) {
+
+               user.addShoppingListInListOfShoppingList(listeDeCourse);
+               db.setUser(user);
+               printAdapterListOfShoppingList();
+            }
+        });
 
 
     }
 
 
-
-        private void printAdapterListOfShoppingList(){
-
-              //  ArrayAdapter<String> adapter = new ArrayAdapter<String>(ShoppingList.this, android.R.layout.simple_list_item_1, (List) utilisateur2.getListOfShoppingList());
-                //shoppingList.setAdapter(adapter);
-    }
-
-        private void addList(){
+    private void  printAdapterListOfShoppingList(){
 
             auth = FirebaseAuth.getInstance();
+            FirebaseUser currentFirebaseUser = auth.getCurrentUser() ;
+            String currentFirebaseUserID = currentFirebaseUser.getUid();
             db = uqac.natacha.food_calendar.Database.DatabaseManager.getInstance();
-
-            authListener = new FirebaseAuth.AuthStateListener() {
+            db.getUser(currentFirebaseUserID, new uqac.natacha.food_calendar.Database.DatabaseManager.Result<User>() {
                 @Override
-                public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                    FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
-                    Log.i("SIGNIN", " " + firebaseUser);
-                        uid = firebaseUser.getUid();
-                        db.getUser(uid, new uqac.natacha.food_calendar.Database.DatabaseManager.Result<User>()
-                        {
-                            @Override
-                            public void onSuccess(User user)
-                            {
+                public void onSuccess(User user) {
 
-                                Toast.makeText(ShoppingList.this, "EMAIL UTILISATEUR :" +   user.getEmail(), Toast.LENGTH_SHORT).show();
+                    if (user.getListOfShoppingList()!= null){
 
-                            }
-
-                            @Override
-                            public void onFailure()
-                            {
-
-                            }
-                        });
+                        if (!user.getListOfShoppingList().isEmpty()) {
+                            ArrayAdapter<String> adapter = new ArrayAdapter<String>(ShoppingList.this, android.R.layout.simple_list_item_1, (List) user.getListOfShoppingList());
+                            shoppingList.setAdapter(adapter);
+                        }
                     }
 
-            };
-
-
+                    else
+                    {
+                        user.setListOfShoppingList(new ArrayList<ListeDeCourse>());
+                        db.setUser(user);
+                    }
+                }
+            });
         }
-
 
 
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
 
-        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
-        menu.setHeaderTitle(databaseManager.getUtilisateur().getListOfShoppingList().get(info.position).getNomListeDeCourse());
-        getMenuInflater().inflate(R.menu.menu_option_shopping_list, menu);
 
-        super.onCreateContextMenu(menu, v, menuInfo);
+        auth = FirebaseAuth.getInstance();
+        FirebaseUser currentFirebaseUser = auth.getCurrentUser() ;
+        String currentFirebaseUserID = currentFirebaseUser.getUid();
+        db = uqac.natacha.food_calendar.Database.DatabaseManager.getInstance();
+
+        db.getUser(currentFirebaseUserID, new uqac.natacha.food_calendar.Database.DatabaseManager.Result<User>() {
+            @Override
+            public void onSuccess(User user) {
+
+              /*  AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
+                menu.setHeaderTitle(user.getListOfShoppingList().get(info.position).getNomListeDeCourse());
+                getMenuInflater().inflate(R.menu.menu_option_shopping_list, menu);*/
+            }
+        });
+
     }
 
     @Override
