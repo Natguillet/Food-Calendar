@@ -6,11 +6,15 @@ package uqac.natacha.food_calendar.Modele;
  * @version 1.0
  */
 
-public class Aliment {
+public class Aliment implements Comparable<Aliment> {
 
     private String nom;
     private double caloriesParUnite;
-    private Unite  unite;
+    private String  unite;
+
+
+    public Aliment() {
+    }
 
     /**
      * Constructeur de la classe Aliment
@@ -18,16 +22,16 @@ public class Aliment {
      * @param caloriesParUnite nombre de calories pour une unité (g,L,u) de l'aliment
      * @param unite gramme, litre ou unité
      */
-    public Aliment(String nom, double caloriesParUnite, Unite unite){
+    public Aliment(String nom, double caloriesParUnite, String unite){
         this.nom              = nom;
         this.caloriesParUnite = caloriesParUnite;
         this.unite            = unite;
     }
 
 
-    public Aliment() {
+    public int compareTo(Aliment other) {
+        return nom.compareTo(other.nom);
     }
-
 
     /* ***************************************************************************************** **
      *                             G E T T E R    &    S E T T E R                                *
@@ -41,19 +45,7 @@ public class Aliment {
         return caloriesParUnite;
     }
 
-    public Unite getUnite() {
+    public String getUnite() {
         return unite;
-    }
-
-    public void setNom(String nom) {
-        this.nom = nom;
-    }
-
-    public void setCaloriesParUnite(double caloriesParUnite) {
-        this.caloriesParUnite = caloriesParUnite;
-    }
-
-    public void setUnite(Unite unite) {
-        this.unite = unite;
     }
 }

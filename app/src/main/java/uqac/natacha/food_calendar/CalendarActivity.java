@@ -119,6 +119,8 @@ public class CalendarActivity extends AppCompatActivity
         } else if (id == R.id.nav_fridge) {
 
         } else if (id == R.id.nav_recipe) {
+            Intent intent = new Intent(CalendarActivity.this, RecipeCategories.class);
+            startActivity(intent);
 
         } else if (id == R.id.nav_shopping) {
 

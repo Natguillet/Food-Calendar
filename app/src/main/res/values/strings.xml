@@ -1,4 +1,5 @@
 <resources>
+    <!-- Accueil_layout -->
     <string name="app_name">FoodCalendar</string>
     <string name="connexion">Connexion</string>
     <string name="pseudo">Adresse e-mail</string>
@@ -6,10 +7,44 @@
     <string name="inscription">INSCRIPTION</string>
     <string name="s_inscrire">S\'inscrire</string>
     <string name="confirmer_mdp">Confirmer votre mot de passe</string>
+
+    <!-- Categories_recettes_layout -->
+    <string name="entree">Entrée</string>
+    <string name="plat_principal">Plat principal</string>
+    <string name="dessert">Dessert</string>
+    <string name="title">Titre de la recette</string>
+    <string name="category">Catégorie</string>
+    <string name="addRecipe">Ajouter Recette</string>
+    <string name="ingredients">Ingrédients</string>
+    <string name="instructions">Instructions</string>
+    <string name="quantity">Quantité</string>
+    <string name="step">Etape</string>
+    <string name="info">Informations</string>
+    <string name="number">Nombre de portions</string>
+    <string name="difficultyadd">Difficulté (sur 5)</string>
+    <string name="preparation">Temps de préparation</string>
+    <string name="preparationTime">Préparation (en mn)</string>
+    <string name="cookingTime">Cuisson (en mn)</string>
     <string name="title_activity_calendar">CalendarActivity</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="action_settings">Settings</string>
+
+    <!-- Activity_regiter -->
+    <string name="validate">Valider</string>
+    <string name="profile">PROFIL</string>
+    <string name="Recipes">RECETTES</string>
+    <string name="male">Homme</string>
+    <string name="female">Femme</string>
+    <string name="heigth">Taille (en cm)</string>
+    <string name="weigth">Poids (en kg)</string>
+    <string name="numberMeals">Nombre de repas par jour</string>
+    <string name="PhycsicalActivity">Niveau d\'activité physique</string>
+    <string-array name="physicalActivity">
+        <item>Légère</item>
+        <item>Modérée</item>
+        <item>Importante</item>
+    </string-array>
 </resources>

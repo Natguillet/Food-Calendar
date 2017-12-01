@@ -94,7 +94,8 @@ public class LoginActivity extends AppCompatActivity {
             {
                 firebaseUser = firebaseAuth.getCurrentUser();
                 if (firebaseUser == null) {
-                    finish();
+                    //finish();
+                    Log.e("USER", "NULL USER !");
                 }
             }
         };
@@ -325,10 +326,17 @@ public class LoginActivity extends AppCompatActivity {
                         } else {
                             Toast.makeText(LoginActivity.this, "L'identification a réussi !", Toast.LENGTH_SHORT).show();
 
-
-                            Intent intent = new Intent(LoginActivity.this, CalendarActivity.class);
-                            startActivity(intent);
-
+                            String uid = firebaseUser.getUid();
+                            db.getUser(uid, new DatabaseManager.Result<User>() {
+                                @Override
+                                public void onSuccess(User user) {
+                                    if (!user.hasGender()) {
+                                        startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
+                                    } else {
+                                        startActivity(new Intent(LoginActivity.this, CalendarActivity.class));
+                                    }
+                                }
+                            });
                             return;
                         }
                     }

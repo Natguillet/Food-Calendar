@@ -5,10 +5,13 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import butterknife.ButterKnife;
 import uqac.natacha.food_calendar.Database.DatabaseManager;
 import uqac.natacha.food_calendar.Modele.User;
 
@@ -24,6 +27,12 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        ButterKnife.bind(this);
+
+        // Charger les images lourdes
+        Glide.with(this).load(R.drawable.arriereplan_accueil_gris).into((ImageView) findViewById(R.id.iv_arriereplan));
+        Glide.with(this).load(R.drawable.logo_couleur).into((ImageView) findViewById(R.id.iv_logo));
 
         auth = FirebaseAuth.getInstance();
         db = DatabaseManager.getInstance();
@@ -43,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
                         @Override
                         public void onSuccess(User user)
                         {
-                            if (!user.hasEmail()) {
+                            if (!user.hasGender()) {
                                 startActivity(new Intent(MainActivity.this, RegisterActivity.class));
                             } else {
                                 startActivity(new Intent(MainActivity.this, CalendarActivity.class));
@@ -53,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
                         @Override
                         public void onFailure()
                         {
-                            Log.i("User:", "User don't exist");
+                            Log.e("User:", "User don't exist");
                             startActivity(new Intent(MainActivity.this, LoginActivity.class));
                         }
                     });

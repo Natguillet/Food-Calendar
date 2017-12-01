@@ -18,7 +18,7 @@ public class ListeDeCourse {
      */
     public ListeDeCourse() {
         this.articles = new ArrayList<>();
-        articles.add(new AlimentQuantifie(new Aliment("exemple", 1 , Unite.LITRE), 1 ));
+        articles.add(new AlimentQuantifie(new Aliment("exemple", 1 , "L"), 1 ));
     }
 
 
@@ -27,7 +27,7 @@ public class ListeDeCourse {
      */
     public ListeDeCourse(String nomListeDeCourse) {
         this.articles = new ArrayList<>();
-        articles.add(new AlimentQuantifie(new Aliment("exemple", 1 , Unite.LITRE), 1 ));
+        articles.add(new AlimentQuantifie(new Aliment("exemple", 1 , "L"), 1 ));
         this.nomListeDeCourse = nomListeDeCourse;
     }
 

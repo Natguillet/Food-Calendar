@@ -12,6 +12,7 @@ public class User {
 
     @Exclude
     private String uid;
+
     private String email;
     private String gender;
     private String levelActivity;
@@ -32,6 +33,15 @@ public class User {
         this.size = size;
         this.listOfShoppingList = new ArrayList<>();
     }
+    public User(String uid, String email, String gender, String levelActivity, int nbMeals, double weight, int size) {
+        this.uid = uid;
+        this.email = email;
+        this.gender = gender;
+        this.levelActivity = levelActivity;
+        this.nbMeals = nbMeals;
+        this.weight = weight;
+        this.size = size;
+    }
 
     public User(String uid, String email) {
         this.uid = uid;
@@ -39,6 +49,15 @@ public class User {
         this.listOfShoppingList = new ArrayList<>();
         listOfShoppingList.add(new ListeDeCourse("Exemple"));
     }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
 
     public String getUid() {
         return uid;
@@ -58,17 +77,11 @@ public class User {
         this.listOfShoppingList.add(listeDeCourse);
     }
 
-    public String getEmail() {
-        return email;
-    }
 
     public void setEmail(String email) {
         this.email = email;
     }
 
-    public String getGender() {
-        return gender;
-    }
 
     public void setGender(String gender) {
         this.gender = gender;
@@ -114,4 +127,8 @@ public class User {
         this.listOfShoppingList = listOfShoppingList;
     }
 
+
+    public Boolean hasGender(){
+        return gender != null;
+    }
 }
