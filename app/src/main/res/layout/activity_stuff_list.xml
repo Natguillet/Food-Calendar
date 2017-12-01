@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/colorPrimary"
     android:fitsSystemWindows="true"
     tools:context="uqac.natacha.food_calendar.StuffList">
 
@@ -70,6 +71,7 @@
     </LinearLayout>
 
     <ListView
+       android:theme="@style/Base.V7.Theme.AppCompat.Light"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/item_list_view"></ListView>
