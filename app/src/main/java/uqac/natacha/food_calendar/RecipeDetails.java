@@ -3,6 +3,7 @@ package uqac.natacha.food_calendar;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -33,12 +34,13 @@ public class RecipeDetails extends AppCompatActivity {
     @BindView(R.id.textViewPreparation) TextView  tvPreparation;
     @BindView(R.id.textViewDifficulty)  TextView  tvDifficulty;
     @BindView(R.id.iv_image_recipe)     ImageView ivImage;
-    @BindView(R.id.tb_recipe)           android.support.v7.widget.Toolbar   tbRecipe;
+    @BindView(R.id.tbRecipe)            android.support.v7.widget.Toolbar tbRecipe;
 
     @BindView(R.id.llIngredients) LinearLayout llIngredients;
     @BindView(R.id.llIstructions) LinearLayout llInstructions;
 
     private String recipeId;
+    private static final String TAG = "RecipeDetails";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

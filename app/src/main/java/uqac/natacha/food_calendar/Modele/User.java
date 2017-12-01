@@ -10,7 +10,6 @@ public class User {
 
     @Exclude
     private String uid;
-
     private String email;
     private String gender;
     private String levelActivity;
@@ -35,6 +34,30 @@ public class User {
         this.email = email;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public String getLevelActivity() {
+        return levelActivity;
+    }
+
+    public int getNbMeals() {
+        return nbMeals;
+    }
+
+    public double getWeight() {
+        return weight;
+    }
+
+    public int getSize() {
+        return size;
+    }
+
     public String getUid() {
         return uid;
     }
@@ -46,5 +69,9 @@ public class User {
 
     public Boolean hasEmail(){
         return email != null;
+    }
+
+    public Boolean hasGender(){
+        return gender != null;
     }
 }

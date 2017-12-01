@@ -28,9 +28,9 @@
             
             <android.support.v7.widget.Toolbar
                 android:layout_width="match_parent"
-                android:id="@+id/tb_recipe"
+                android:id="@+id/tbRecipe"
                 android:layout_height="?attr/actionBarSize"
-                app:title="Titre"
+                app:title=""
                 app:layout_collapseMode="pin"/>
                 
         </android.support.design.widget.CollapsingToolbarLayout>
