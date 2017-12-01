@@ -26,6 +26,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -45,7 +46,13 @@ public class ShoppingList extends AppCompatActivity {
     private User UtilisateurCourant ;
     private FirebaseAuth auth;
     private uqac.natacha.food_calendar.Database.DatabaseManager db;
+    private   ContextMenu menuInner;
+    ContextMenu.ContextMenuInfo menuInfoInner;
+    ArrayList<ListeDeCourse> shoppingListArray;
 
+    public  ContextMenu menu;
+    public View v, ContextMenu;
+    public android.view.ContextMenu.ContextMenuInfo menuInfo;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -174,18 +181,22 @@ public class ShoppingList extends AppCompatActivity {
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
 
 
+
         auth = FirebaseAuth.getInstance();
         FirebaseUser currentFirebaseUser = auth.getCurrentUser() ;
         String currentFirebaseUserID = currentFirebaseUser.getUid();
         db = uqac.natacha.food_calendar.Database.DatabaseManager.getInstance();
 
+        menuInner =menu;
+
         db.getUser(currentFirebaseUserID, new uqac.natacha.food_calendar.Database.DatabaseManager.Result<User>() {
             @Override
             public void onSuccess(User user) {
 
-              /*  AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
-                menu.setHeaderTitle(user.getListOfShoppingList().get(info.position).getNomListeDeCourse());
-                getMenuInflater().inflate(R.menu.menu_option_shopping_list, menu);*/
+                shoppingListArray = user.getListOfShoppingList();
+                AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInner;
+                menuInner.setHeaderTitle(shoppingListArray.get(info.position).getNomListeDeCourse());
+                getMenuInflater().inflate(R.menu.menu_option_shopping_list, menuInner);
             }
         });
 
