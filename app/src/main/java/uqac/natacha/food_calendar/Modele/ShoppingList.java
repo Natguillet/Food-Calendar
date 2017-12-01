@@ -16,6 +16,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -28,7 +29,11 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import uqac.natacha.food_calendar.CalendarActivity;
+import uqac.natacha.food_calendar.LoginActivity;
+import uqac.natacha.food_calendar.MainActivity;
 import uqac.natacha.food_calendar.R;
+import uqac.natacha.food_calendar.RegisterActivity;
 import uqac.natacha.food_calendar.StuffList;
 
 
@@ -36,8 +41,13 @@ public class ShoppingList extends AppCompatActivity {
 
     ListView shoppingList = null;
     private FloatingActionButton mFloatingActionButton;
-  private  DatabaseManager databaseManager;
-  private Utilisateur utilisateur2;
+     private  DatabaseManager databaseManager;
+    private FirebaseAuth auth;
+    private FirebaseAuth.AuthStateListener authListener;
+    private String uid;
+
+
+    private uqac.natacha.food_calendar.Database.DatabaseManager db;
 
 
     @Override
@@ -50,15 +60,12 @@ public class ShoppingList extends AppCompatActivity {
         mFloatingActionButton = (FloatingActionButton) findViewById(R.id.floatingActionButton_add);
         shoppingList = (ListView) findViewById(R.id.listview_shoppingList);
 
-        /*databaseManager = new DatabaseManager();*/
-        try {
-            getUtilisateur();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+
+        addList();
+
 
         shoppingList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
+
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
                 Intent intent = new Intent(ShoppingList.this, StuffList.class);
@@ -90,7 +97,7 @@ public class ShoppingList extends AppCompatActivity {
                                     public void onClick(DialogInterface dialog,int id) {
 
                                         ListeDeCourse listeDeCourse = new ListeDeCourse(userInput.getText().toString());
-                                        databaseManager.getUtilisateur().addShoppingListInListOfShoppingList(listeDeCourse);
+
 
 
                                     }
@@ -118,59 +125,47 @@ public class ShoppingList extends AppCompatActivity {
 
     }
 
-    private void getUtilisateur() throws InterruptedException {
-
-        Log.i("SHOPPING LIST", "ON INITIALISE L'UTILISATEUR ");
-        final FirebaseDatabase database = FirebaseDatabase.getInstance();
-        final DatabaseReference table_user = database.getReference("User");
-        final FirebaseAuth auth = FirebaseAuth.getInstance();
-        FirebaseUser currentFirebaseUser = auth.getCurrentUser() ;
-        final String currentFirebaseUserID = currentFirebaseUser.getUid();
-
-        table_user.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-
-                for (DataSnapshot child : dataSnapshot.getChildren()) {
-                    Utilisateur utilisateur = child.getValue(Utilisateur.class);
-                   // Utilisateur utilisateur = dataSnapshot.child(currentFirebaseUserID).getValue(Utilisateur.class);
-                    utilisateur2 = utilisateur;
-                    Log.i("DatabaseManager", "ON DATA CHANGE ");
-
-
-                }
-
-
-
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-
-
-
-
-        });
-
-        Thread.sleep(1000);
-
-
-
-
-        Log.i("DatabaseManager", "ON DATA CHANGE ");
-
-    }
 
 
         private void printAdapterListOfShoppingList(){
 
-                ArrayAdapter<String> adapter = new ArrayAdapter<String>(ShoppingList.this, android.R.layout.simple_list_item_1, (List) utilisateur2.getListOfShoppingList());
-                shoppingList.setAdapter(adapter);
+              //  ArrayAdapter<String> adapter = new ArrayAdapter<String>(ShoppingList.this, android.R.layout.simple_list_item_1, (List) utilisateur2.getListOfShoppingList());
+                //shoppingList.setAdapter(adapter);
     }
 
+        private void addList(){
+
+            auth = FirebaseAuth.getInstance();
+            db = uqac.natacha.food_calendar.Database.DatabaseManager.getInstance();
+
+            authListener = new FirebaseAuth.AuthStateListener() {
+                @Override
+                public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                    FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+                    Log.i("SIGNIN", " " + firebaseUser);
+                        uid = firebaseUser.getUid();
+                        db.getUser(uid, new uqac.natacha.food_calendar.Database.DatabaseManager.Result<User>()
+                        {
+                            @Override
+                            public void onSuccess(User user)
+                            {
+
+                                Toast.makeText(ShoppingList.this, "EMAIL UTILISATEUR :" +   user.getEmail(), Toast.LENGTH_SHORT).show();
+
+                            }
+
+                            @Override
+                            public void onFailure()
+                            {
+
+                            }
+                        });
+                    }
+
+            };
+
+
+        }
 
 
 
