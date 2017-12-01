@@ -42,6 +42,9 @@
     <string name="weigth">Poids (en kg)</string>
     <string name="numberMeals">Nombre de repas par jour</string>
     <string name="PhycsicalActivity">Niveau d\'activité physique</string>
+    <string name="stat">STATISTIQUES</string>
+    <string name="stat2">Besoin énergétique journalier selon votre profil</string>
+    <string name="stat3">Kcal</string>
     <string-array name="physicalActivity">
         <item>Légère</item>
         <item>Modérée</item>

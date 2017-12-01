@@ -112,7 +112,8 @@ public class CalendarActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_stat) {
-            // Handle the camera action
+            Intent intent = new Intent(CalendarActivity.this, StatActivity.class);
+            startActivity(intent);
         } else if (id == R.id.nav_recipe) {
             Intent intent = new Intent(CalendarActivity.this, RecipeCategories.class);
             startActivity(intent);

@@ -27,11 +27,12 @@
         <activity android:name=".StuffList" />
         <activity android:name=".Modele.ShoppingList" />
         <activity android:name=".LoginActivity" />
-        <activity android:name=".RegisterActivity"></activity>
+        <activity android:name=".RegisterActivity" />
         <activity android:name=".RecipesList" />
         <activity android:name=".RecipeCategories" />
         <activity android:name=".AddRecipe" />
         <activity android:name=".RecipeDetails" />
+        <activity android:name=".StatActivity"></activity>
     </application>
 
 </manifest>
