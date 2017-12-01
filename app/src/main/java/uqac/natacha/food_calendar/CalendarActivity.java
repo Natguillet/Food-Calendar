@@ -17,7 +17,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.CalendarView;
+import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.prolificinteractive.materialcalendarview.CalendarDay;
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
 import com.prolificinteractive.materialcalendarview.OnDateSelectedListener;
@@ -43,6 +45,8 @@ public class CalendarActivity extends AppCompatActivity
     @BindView(R.id.nav_view) NavigationView navigationView;
 
     private  static final String TAG = "CalendarActivity";
+
+    private FirebaseAuth auth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -123,17 +127,17 @@ public class CalendarActivity extends AppCompatActivity
             startActivity(intent);
 
         } else if (id == R.id.nav_shopping) {
-
             Intent intent = new Intent(CalendarActivity.this, ShoppingList.class);
             startActivity(intent);
-
-
         } else if (id == R.id.nav_settings) {
             Intent intent = new Intent(CalendarActivity.this, RegisterActivity.class);
             startActivity(intent);
 
         } else if (id == R.id.nav_disconnection) {
-
+            auth.getInstance().signOut();
+            Toast.makeText(this,"Déconnexion", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(CalendarActivity.this, LoginActivity.class);
+            startActivity(intent);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

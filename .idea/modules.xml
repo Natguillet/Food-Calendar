@@ -2,9 +2,10 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/Food-Calendar.iml" filepath="$PROJECT_DIR$/Food-Calendar.iml" />
       <module fileurl="file://D:\Projet_AndroidStudio\FoodCalendar_OOP\Food-Calendar.iml" filepath="D:\Projet_AndroidStudio\FoodCalendar_OOP\Food-Calendar.iml" />
-      <module fileurl="file://$PROJECT_DIR$/FoodCalendar_OOP.iml" filepath="$PROJECT_DIR$/FoodCalendar_OOP.iml" />
       <module fileurl="file://D:\Users\Natiassa\StudioProjects\Food-Calendar\.idea\FoodCalendar_OOP.iml" filepath="D:\Users\Natiassa\StudioProjects\Food-Calendar\.idea\FoodCalendar_OOP.iml" />
+      <module fileurl="file://D:\Users\Natiassa\StudioProjects\Food-Calendar\FoodCalendar_OOP.iml" filepath="D:\Users\Natiassa\StudioProjects\Food-Calendar\FoodCalendar_OOP.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>
