@@ -94,7 +94,8 @@ public class LoginActivity extends AppCompatActivity {
             {
                 firebaseUser = firebaseAuth.getCurrentUser();
                 if (firebaseUser == null) {
-                    finish();
+                    //finish();
+                    Log.e("USER", "NULL USER !");
                 }
             }
         };

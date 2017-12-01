@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
                         @Override
                         public void onFailure()
                         {
-                            Log.i("User:", "User don't exist");
+                            Log.e("User:", "User don't exist");
                             startActivity(new Intent(MainActivity.this, LoginActivity.class));
                         }
                     });
