@@ -9,6 +9,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +21,7 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -53,6 +55,7 @@ public class StuffList extends AppCompatActivity {
     EditText editText_quantity;
     int iGlob;
     int positionShoppingList;
+    ListeDeCourse itemListArray;
 
 
     ListView shoppingList = null;
@@ -60,6 +63,14 @@ public class StuffList extends AppCompatActivity {
     private FirebaseAuth auth;
     private uqac.natacha.food_calendar.Database.DatabaseManager db;
     private int positionDansLaListe;
+    public  int index;
+    public  ContextMenu menu;
+
+    private   ContextMenu menuInner;
+    ContextMenu.ContextMenuInfo menuInfoInner;
+
+    List<String> list = new ArrayList<String>();
+    ArrayAdapter<String> adapter;
 
 
 
@@ -73,8 +84,10 @@ public class StuffList extends AppCompatActivity {
         positionDansLaListe = getIntent().getIntExtra("position", 1);
 
         updateView();
-
         registerForContextMenu(itemListView);
+        //list.add("delete");
+       // adapter = new ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_1,list);
+        //itemListView.setAdapter(adapter);
 
         buttonAddStuff = (Button) findViewById(R.id.button_addStuff) ;
 
@@ -161,12 +174,32 @@ public class StuffList extends AppCompatActivity {
 
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-/*
 
-        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
-        menu.setHeaderTitle(nameStuff.get(info.position));
-        getMenuInflater().inflate(R.menu.menu_option_stuff_list, menu);
-*/
+        menuInner =menu;
+
+        View view = v;
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.menu_option_shopping_list, menuInner);
+       /* if (view == null){
+            RelativeLayout layout = (RelativeLayout) LayoutInflater.from(getMenuInflater())
+        }
+
+        auth = FirebaseAuth.getInstance();
+        FirebaseUser currentFirebaseUser = auth.getCurrentUser() ;
+        String currentFirebaseUserID = currentFirebaseUser.getUid();
+        db = uqac.natacha.food_calendar.Database.DatabaseManager.getInstance();
+
+
+        db.getUser(currentFirebaseUserID, new uqac.natacha.food_calendar.Database.DatabaseManager.Result<User>() {
+            @Override
+            public void onSuccess(User user) {
+
+                AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInner;
+               itemListArray = user.getListOfShoppingList().get(info.position);
+                menuInner.setHeaderTitle(itemListArray.getNomListeDeCourse());
+                getMenuInflater().inflate(R.menu.menu_option_shopping_list, menuInner);
+            }
+        });*/
 
         super.onCreateContextMenu(menu, v, menuInfo);
     }
@@ -175,14 +208,27 @@ public class StuffList extends AppCompatActivity {
     public boolean onContextItemSelected(MenuItem item) {
 
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
-        int index = info.position;
+       index = info.position;
 
         switch (item.getItemId()){
             case R.id.item_delete:
 
-                break;
+                auth = FirebaseAuth.getInstance();
+                FirebaseUser currentFirebaseUser = auth.getCurrentUser() ;
+                String currentFirebaseUserID = currentFirebaseUser.getUid();
+                db = uqac.natacha.food_calendar.Database.DatabaseManager.getInstance();
 
-            case R.id.item_moreInfo:
+
+                db.getUser(currentFirebaseUserID, new uqac.natacha.food_calendar.Database.DatabaseManager.Result<User>() {
+                    @Override
+                    public void onSuccess(User user) {
+                        user.getListOfShoppingList().get(positionDansLaListe).getArticles().remove(index);
+                        db.setUser(user);
+
+                        updateView();
+                    }
+                });
+
                 break;
         }
         return super.onContextItemSelected(item);

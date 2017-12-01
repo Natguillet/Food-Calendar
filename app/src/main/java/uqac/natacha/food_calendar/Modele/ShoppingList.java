@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -49,6 +50,7 @@ public class ShoppingList extends AppCompatActivity {
     private   ContextMenu menuInner;
     ContextMenu.ContextMenuInfo menuInfoInner;
     ArrayList<ListeDeCourse> shoppingListArray;
+    public  int index;
 
     public  ContextMenu menu;
     public View v, ContextMenu;
@@ -65,6 +67,7 @@ public class ShoppingList extends AppCompatActivity {
 
 
         printAdapterListOfShoppingList();
+        registerForContextMenu(shoppingList);
 
 
         shoppingList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -177,8 +180,70 @@ public class ShoppingList extends AppCompatActivity {
             });
         }
 
-
+    @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+
+        menuInner =menu;
+
+        View view = v;
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.menu_option_shopping_list, menuInner);
+       /* if (view == null){
+            RelativeLayout layout = (RelativeLayout) LayoutInflater.from(getMenuInflater())
+        }
+
+        auth = FirebaseAuth.getInstance();
+        FirebaseUser currentFirebaseUser = auth.getCurrentUser() ;
+        String currentFirebaseUserID = currentFirebaseUser.getUid();
+        db = uqac.natacha.food_calendar.Database.DatabaseManager.getInstance();
+
+
+        db.getUser(currentFirebaseUserID, new uqac.natacha.food_calendar.Database.DatabaseManager.Result<User>() {
+            @Override
+            public void onSuccess(User user) {
+
+                AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInner;
+               itemListArray = user.getListOfShoppingList().get(info.position);
+                menuInner.setHeaderTitle(itemListArray.getNomListeDeCourse());
+                getMenuInflater().inflate(R.menu.menu_option_shopping_list, menuInner);
+            }
+        });*/
+
+        super.onCreateContextMenu(menu, v, menuInfo);
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+        index = info.position;
+
+        switch (item.getItemId()){
+            case R.id.item_delete:
+
+                auth = FirebaseAuth.getInstance();
+                FirebaseUser currentFirebaseUser = auth.getCurrentUser() ;
+                String currentFirebaseUserID = currentFirebaseUser.getUid();
+                db = uqac.natacha.food_calendar.Database.DatabaseManager.getInstance();
+
+
+                db.getUser(currentFirebaseUserID, new uqac.natacha.food_calendar.Database.DatabaseManager.Result<User>() {
+                    @Override
+                    public void onSuccess(User user) {
+                        user.getListOfShoppingList().remove(index);
+                        db.setUser(user);
+                        printAdapterListOfShoppingList();
+
+                    }
+                });
+
+                break;
+        }
+        return super.onContextItemSelected(item);
+    }
+
+
+   /* public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
 
 
 
@@ -220,7 +285,7 @@ public class ShoppingList extends AppCompatActivity {
         return super.onContextItemSelected(item);
     }
 
-
+*/
 
 
 
