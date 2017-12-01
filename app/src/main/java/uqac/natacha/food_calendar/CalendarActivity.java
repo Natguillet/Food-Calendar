@@ -129,6 +129,8 @@ public class CalendarActivity extends AppCompatActivity
 
 
         } else if (id == R.id.nav_settings) {
+            Intent intent = new Intent(CalendarActivity.this, RegisterActivity.class);
+            startActivity(intent);
 
         } else if (id == R.id.nav_disconnection) {
 
