@@ -1,36 +1,48 @@
 package uqac.natacha.food_calendar;
 
+import android.content.Context;
 import android.content.Intent;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.ContextMenu;
+import android.view.LayoutInflater;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.FirebaseDatabase;
 
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
+import java.util.List;
 
+import uqac.natacha.food_calendar.Modele.Aliment;
+import uqac.natacha.food_calendar.Modele.AlimentQuantifie;
+import uqac.natacha.food_calendar.Modele.ListeDeCourse;
+import uqac.natacha.food_calendar.Modele.ShoppingList;
+import uqac.natacha.food_calendar.Modele.Unite;
+import uqac.natacha.food_calendar.Modele.User;
 
 
 public class StuffList extends AppCompatActivity {
-
-
-
-
-    ArrayList<String> numberOfThisStuff = new ArrayList<String>();
-    ArrayList<String> nameStuff = new ArrayList<String>();
-
 
 
     ListView itemListView;
@@ -38,27 +50,44 @@ public class StuffList extends AppCompatActivity {
     TextView textViewNameItem;
     TextView textViewQuantityItem;
     CheckBox checkBoxOwnItem;
-    CustomAdapter customAdapter;
     Button buttonAddStuff;
     EditText editText_stuff;
     EditText editText_quantity;
+    int iGlob;
+    int positionShoppingList;
+    ListeDeCourse itemListArray;
 
+
+    ListView shoppingList = null;
+    private User UtilisateurCourant ;
+    private FirebaseAuth auth;
+    private uqac.natacha.food_calendar.Database.DatabaseManager db;
+    private int positionDansLaListe;
+    public  int index;
+    public  ContextMenu menu;
+
+    private   ContextMenu menuInner;
+    ContextMenu.ContextMenuInfo menuInfoInner;
+
+    List<String> list = new ArrayList<String>();
+    ArrayAdapter<String> adapter;
 
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        numberOfThisStuff.add("1");
-        nameStuff.add("chocolat");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stuff_list);
 
         itemListView = (ListView) findViewById(R.id.item_list_view);
-        customAdapter = new CustomAdapter();
-        itemListView.setAdapter(customAdapter);
-        registerForContextMenu(itemListView);
+        positionDansLaListe = getIntent().getIntExtra("position", 1);
 
+        updateView();
+        registerForContextMenu(itemListView);
+        //list.add("delete");
+       // adapter = new ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_1,list);
+        //itemListView.setAdapter(adapter);
 
         buttonAddStuff = (Button) findViewById(R.id.button_addStuff) ;
 
@@ -69,26 +98,108 @@ public class StuffList extends AppCompatActivity {
                 editText_stuff = findViewById(R.id.editText_stuffAdd);
                 editText_quantity = findViewById(R.id.quantityAdd);
 
+                auth = FirebaseAuth.getInstance();
+                FirebaseUser currentFirebaseUser = auth.getCurrentUser() ;
+                String currentFirebaseUserID = currentFirebaseUser.getUid();
+                db = uqac.natacha.food_calendar.Database.DatabaseManager.getInstance();
+                positionShoppingList = getIntent().getIntExtra("position", 1);
 
-                nameStuff.add(editText_stuff.getText().toString());
-                numberOfThisStuff.add(editText_quantity.getText().toString());
+                db.getUser(currentFirebaseUserID, new uqac.natacha.food_calendar.Database.DatabaseManager.Result<User>() {
+                    @Override
+                    public void onSuccess(User user) {
+                        int position = getIntent().getIntExtra("position", 1);
+
+                        if (!user.getListOfShoppingList().get(position).getArticles().isEmpty() ){
+
+                            if ( !TextUtils.isEmpty(editText_stuff.getText().toString().trim()) && !TextUtils.isEmpty(editText_quantity.getText().toString().trim()))
+                            {
+
+                                user.getListOfShoppingList().get(position).getArticles().add(
+                                        new AlimentQuantifie(
+                                                new Aliment(
+                                                        editText_stuff.getText().toString()
+                                                        , 1
+                                                        , Unite.UNITE)
+                                                ,Integer.parseInt(editText_quantity.getText().toString() )));
+
+                                db.setUser(user);
+
+                                updateView();
+
+                            }
+
+                            else
+                            {
+                               Toast.makeText(StuffList.this, "Please fill in both fields", Toast.LENGTH_LONG);
+                            }
 
 
-
-
+                        }
+                    }
+                });
             }
+
+
+            FirebaseAuth auth = FirebaseAuth.getInstance();
+            FirebaseUser currentFirebaseUser = auth.getCurrentUser() ;
+            String currentFirebaseUserID = currentFirebaseUser.getUid();
+
+            uqac.natacha.food_calendar.Database.DatabaseManager  db = uqac.natacha.food_calendar.Database.DatabaseManager.getInstance();
+
+
         });
 
+
+    }
+
+    public void updateView(){
+
+        auth = FirebaseAuth.getInstance();
+        FirebaseUser currentFirebaseUser = auth.getCurrentUser() ;
+        String currentFirebaseUserID = currentFirebaseUser.getUid();
+        db = uqac.natacha.food_calendar.Database.DatabaseManager.getInstance();
+        db.getUser(currentFirebaseUserID, new uqac.natacha.food_calendar.Database.DatabaseManager.Result<User>() {
+            @Override
+            public void onSuccess(User user) {
+
+                ArrayList<AlimentQuantifie> ARcourante = new ArrayList<>();
+                ARcourante = user.getListOfShoppingList().get(positionDansLaListe).getArticles();
+                CustomListAdapter customAdapter = new CustomListAdapter(ARcourante);
+                itemListView = (ListView) findViewById(R.id.item_list_view);
+                itemListView.setAdapter(customAdapter);
+            }
+        });
 
     }
 
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
 
+        menuInner =menu;
 
-        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
-        menu.setHeaderTitle(nameStuff.get(info.position));
-        getMenuInflater().inflate(R.menu.menu_option_stuff_list, menu);
+        View view = v;
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.menu_option_shopping_list, menuInner);
+       /* if (view == null){
+            RelativeLayout layout = (RelativeLayout) LayoutInflater.from(getMenuInflater())
+        }
+
+        auth = FirebaseAuth.getInstance();
+        FirebaseUser currentFirebaseUser = auth.getCurrentUser() ;
+        String currentFirebaseUserID = currentFirebaseUser.getUid();
+        db = uqac.natacha.food_calendar.Database.DatabaseManager.getInstance();
+
+
+        db.getUser(currentFirebaseUserID, new uqac.natacha.food_calendar.Database.DatabaseManager.Result<User>() {
+            @Override
+            public void onSuccess(User user) {
+
+                AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInner;
+               itemListArray = user.getListOfShoppingList().get(info.position);
+                menuInner.setHeaderTitle(itemListArray.getNomListeDeCourse());
+                getMenuInflater().inflate(R.menu.menu_option_shopping_list, menuInner);
+            }
+        });*/
 
         super.onCreateContextMenu(menu, v, menuInfo);
     }
@@ -96,63 +207,179 @@ public class StuffList extends AppCompatActivity {
     @Override
     public boolean onContextItemSelected(MenuItem item) {
 
-
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
-        int index = info.position;
-
-
+       index = info.position;
 
         switch (item.getItemId()){
             case R.id.item_delete:
 
-                numberOfThisStuff.remove(index);
-                nameStuff.remove(index);
+                auth = FirebaseAuth.getInstance();
+                FirebaseUser currentFirebaseUser = auth.getCurrentUser() ;
+                String currentFirebaseUserID = currentFirebaseUser.getUid();
+                db = uqac.natacha.food_calendar.Database.DatabaseManager.getInstance();
+
+
+                db.getUser(currentFirebaseUserID, new uqac.natacha.food_calendar.Database.DatabaseManager.Result<User>() {
+                    @Override
+                    public void onSuccess(User user) {
+                        user.getListOfShoppingList().get(positionDansLaListe).getArticles().remove(index);
+                        db.setUser(user);
+
+                        updateView();
+                    }
+                });
+
                 break;
-
-
-
-            case R.id.item_moreInfo:
-                break;
-
         }
-
-
-
         return super.onContextItemSelected(item);
     }
 
-    class CustomAdapter extends BaseAdapter{
+
+
+    public  class CustomListAdapter extends BaseAdapter{
+
+        private ArrayList<AlimentQuantifie> alimentQuantifieArrayList;
+
+
+        public CustomListAdapter(ArrayList<AlimentQuantifie> alimentQuantifieArrayList){
+            this.alimentQuantifieArrayList=alimentQuantifieArrayList;
+        }
+        @Override
+        public int getCount() {
+            return alimentQuantifieArrayList.size();
+        }
+
+        @Override
+        public Object getItem(int position) {
+            return alimentQuantifieArrayList.get(position);
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return position;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+
+            if (convertView == null) {
+                convertView = getLayoutInflater().inflate(R.layout.custom_list_stuff,null);
+            }
+
+            AlimentQuantifie currentAlimentQuantifie = (AlimentQuantifie) getItem(position);
+
+            imageViewItem = (ImageView ) convertView.findViewById(R.id.imageViewItem);
+            textViewNameItem = (TextView) convertView.findViewById(R.id.textView_name);
+            textViewQuantityItem = (TextView) convertView.findViewById(R.id.textView_quantity);
+            checkBoxOwnItem = (CheckBox) convertView.findViewById(R.id.checkBox_posseder);
+
+            textViewNameItem.setText(currentAlimentQuantifie.getString());
+            textViewQuantityItem.setText(String.valueOf(currentAlimentQuantifie.getQuantite()));
+
+
+            return convertView;
+        }
+    }
+
+
+   /* class CustomAdapter extends BaseAdapter{
+
+
+        int count =0;
+        AlimentQuantifie alimentQuantifieCourant = null;
+
 
 
         @Override
         public int getCount() {
-            return nameStuff.size();
+
+            auth = FirebaseAuth.getInstance();
+            FirebaseUser currentFirebaseUser = auth.getCurrentUser() ;
+            String currentFirebaseUserID = currentFirebaseUser.getUid();
+            db = uqac.natacha.food_calendar.Database.DatabaseManager.getInstance();
+            db.getUser(currentFirebaseUserID, new uqac.natacha.food_calendar.Database.DatabaseManager.Result<User>() {
+                @Override
+                public void onSuccess(User user) {
+
+                    CustomAdapter.this.count = (user.getListOfShoppingList().get(positionShoppingList).getArticles().size());
+                    Log.i("Custom adapter getCount", "size : " + user.getListOfShoppingList().get(positionShoppingList).getArticles().size());
+                }
+            });
+
+            return  count;
+
         }
 
         @Override
         public Object getItem(int i) {
-            return null;
+
+            iGlob = i;
+
+            Log.i("Custom adapter getItem", "iGlob : " + iGlob);
+
+
+
+
+            auth = FirebaseAuth.getInstance();
+            FirebaseUser currentFirebaseUser = auth.getCurrentUser() ;
+            String currentFirebaseUserID = currentFirebaseUser.getUid();
+            db = uqac.natacha.food_calendar.Database.DatabaseManager.getInstance();
+            db.getUser(currentFirebaseUserID, new uqac.natacha.food_calendar.Database.DatabaseManager.Result<User>() {
+                @Override
+                public void onSuccess(User user) {
+
+                   alimentQuantifieCourant = (user.getListOfShoppingList().get(positionShoppingList).getArticles().get(iGlob));
+                }
+            });
+
+            return alimentQuantifieCourant;
         }
 
         @Override
         public long getItemId(int i) {
-            return 0;
+           return 0;
         }
 
         @Override
         public View getView(int i, View view, ViewGroup viewGroup) {
-           view = getLayoutInflater().inflate(R.layout.custom_list_stuff,null);
+
+            iGlob =i;
+            view = getLayoutInflater().inflate(R.layout.custom_list_stuff,null);
+
             imageViewItem = (ImageView ) view.findViewById(R.id.imageViewItem);
             textViewNameItem = (TextView) view.findViewById(R.id.textView_name);
             textViewQuantityItem = (TextView) view.findViewById(R.id.textView_quantity);
             checkBoxOwnItem = (CheckBox) view.findViewById(R.id.checkBox_posseder);
 
-            textViewNameItem.setText(nameStuff.get(i));
-            textViewQuantityItem.setText(numberOfThisStuff.get(i));
+            auth = FirebaseAuth.getInstance();
+            FirebaseUser currentFirebaseUser = auth.getCurrentUser() ;
+            String currentFirebaseUserID = currentFirebaseUser.getUid();
+            db = uqac.natacha.food_calendar.Database.DatabaseManager.getInstance();
+
+            getItem(i);
+            textViewNameItem.setText(alimentQuantifieCourant.getString());
+            getCount();
+
+            textViewQuantityItem.setText(String.valueOf(count));
+
+
+            *//*db.getUser(currentFirebaseUserID, new uqac.natacha.food_calendar.Database.DatabaseManager.Result<User>() {
+                @Override
+                public void onSuccess(User user) {
+                    int position = getIntent().getIntExtra("position", 1);
+                    if (!user.getListOfShoppingList().get(position  ).getArticles().isEmpty() ){
+
+                    textViewNameItem.setText(user.getListOfShoppingList().get(position).getArticles().get(iGlob).getString());
+                    textViewQuantityItem.setText(String.valueOf( user.getListOfShoppingList().get(position).getArticles().get(iGlob).getQuantite()));
+
+                    }
+                }
+            });*//*
+
 
             return view;
         }
-    }
+    }*/
 
 
 

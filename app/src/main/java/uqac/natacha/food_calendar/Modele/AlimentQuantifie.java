@@ -10,23 +10,41 @@ public class AlimentQuantifie {
     private Aliment aliment;
     private double  quantite;
 
-    public AlimentQuantifie() {
+    public String getName() {
+        return name;
     }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    private String name;
 
     /**
      * Constructeur de la classe AlimentQuantifie
-     * @param aliment aliment de base
+
      * @param quantite quantité de l'aliment
+     *
+     *
+     *
      */
+
     public AlimentQuantifie(Aliment aliment, double quantite){
         this.aliment  = aliment;
         this.quantite = quantite;
+    }
+
+    public AlimentQuantifie() {
     }
 
     /* ***************************************************************************************** **
      *                             G E T T E R    &    S E T T E R                                *
      * ***************************************************************************************** **/
 
+    public String getString (){
+
+        return this.aliment.getNom();
+    }
     public Aliment getAliment() {
         return aliment;
     }
@@ -69,6 +87,12 @@ public class AlimentQuantifie {
 
     @Override
     public String toString() {
-        return this.aliment.getNom().toUpperCase()+" : "+this.quantite+" "+this.aliment.getUnite().toString();
+
+        return this.aliment.getNom();
+        // return this.aliment.getNom().toUpperCase()+" : "+this.quantite+" "+this.aliment.getUnite().toString();
+    }
+
+    public void setAliment(Aliment aliment) {
+        this.aliment = aliment;
     }
 }

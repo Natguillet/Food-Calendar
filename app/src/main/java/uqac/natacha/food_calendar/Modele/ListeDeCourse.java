@@ -10,6 +10,7 @@ import java.util.ArrayList;
 
 public class ListeDeCourse {
 
+    private String nomListeDeCourse;
     private ArrayList<AlimentQuantifie> articles;
 
     /**
@@ -17,7 +18,19 @@ public class ListeDeCourse {
      */
     public ListeDeCourse() {
         this.articles = new ArrayList<>();
+        articles.add(new AlimentQuantifie(new Aliment("exemple", 1 , Unite.LITRE), 1 ));
     }
+
+
+    /**
+     *  Autre Constructeur de la classe ListeDeCourse. Initialise une liste vide et un nom de liste de course
+     */
+    public ListeDeCourse(String nomListeDeCourse) {
+        this.articles = new ArrayList<>();
+        articles.add(new AlimentQuantifie(new Aliment("exemple", 1 , Unite.LITRE), 1 ));
+        this.nomListeDeCourse = nomListeDeCourse;
+    }
+
 
     /**
      * Constructeur de la classe ListeDeCourse. Initialise une liste déjà existante.
@@ -26,6 +39,14 @@ public class ListeDeCourse {
      */
     public ListeDeCourse(ArrayList<AlimentQuantifie> articles) {
         this.articles = articles;
+    }
+
+    public String getNomListeDeCourse() {
+        return nomListeDeCourse;
+    }
+
+    public void setNomListeDeCourse(String nomListeDeCourse) {
+        this.nomListeDeCourse = nomListeDeCourse;
     }
 
 
@@ -79,7 +100,7 @@ public class ListeDeCourse {
      */
     public void raz(){ this.articles = new ArrayList<>(); }
 
-
+/*
     @Override
     public String toString() {
 
@@ -88,6 +109,11 @@ public class ListeDeCourse {
             res += "\n" + a.toString();
         }
         return res+"\n----------------------------";
+    }*/
+
+    @Override
+    public String toString() {
+        return (this.nomListeDeCourse);
     }
 
 

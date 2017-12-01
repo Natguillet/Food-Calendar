@@ -22,6 +22,11 @@ public class DatabaseManager {
 
     private final static String USERS = "users";
 
+    public User getUser() {
+        return user;
+    }
+
+    private  User user;
 
     private Reference ref;
 
@@ -47,9 +52,10 @@ public class DatabaseManager {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot)
             {
-                User user = dataSnapshot.getValue(User.class);
+                user = dataSnapshot.getValue(User.class);
                 if (user != null) {
                     result.onSuccess(user.setUid(uid));
+
                 } else {
                     result.onFailure();
                 }
@@ -76,7 +82,7 @@ public class DatabaseManager {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot)
                 {
-                    User user = dataSnapshot.getValue(User.class);
+                    User  user = dataSnapshot.getValue(User.class);
                     if (user != null) {
                         result.onSuccess(user.setUid(uid));
                     } else {
