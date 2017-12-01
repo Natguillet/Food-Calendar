@@ -3,14 +3,11 @@ package uqac.natacha.food_calendar;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toolbar;
 
 import com.bumptech.glide.Glide;
 import com.google.firebase.database.DataSnapshot;
@@ -22,10 +19,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import uqac.natacha.food_calendar.Modele.AlimentQuantifie;
 import uqac.natacha.food_calendar.Modele.Recipe;
-
-/**
- * Created by Florian on 31/10/2017.
- */
 
 public class RecipeDetails extends AppCompatActivity {
 

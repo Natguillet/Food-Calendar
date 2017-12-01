@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
@@ -19,12 +18,10 @@ import uqac.natacha.food_calendar.Interface.ItemClickListener;
 import uqac.natacha.food_calendar.Modele.Recipe;
 import uqac.natacha.food_calendar.R;
 import uqac.natacha.food_calendar.RecipeDetails;
-import uqac.natacha.food_calendar.RecipesList;
 import uqac.natacha.food_calendar.ViewHolder.RecipesListViewHolder;
 
 public class RecipeListAdapter extends RecyclerView.Adapter<RecipesListViewHolder> {
 
-    private static final String TAG = "RecipeListAdapter";
     private List<Recipe> recipes;
     private Context      context;
 

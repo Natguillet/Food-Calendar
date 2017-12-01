@@ -74,7 +74,12 @@ public class User {
 
     //ajoute une liste de course à la liste de liste de course de l'utilisateur
     public void addShoppingListInListOfShoppingList(ListeDeCourse listeDeCourse){
-        this.listOfShoppingList.add(listeDeCourse);
+        if (listOfShoppingList == null) {
+            this.listOfShoppingList = new ArrayList<>();
+            this.listOfShoppingList.add(listeDeCourse);
+        } else {
+            this.listOfShoppingList.add(listeDeCourse);
+        }
     }
 
 

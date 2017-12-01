@@ -1,14 +1,9 @@
 package uqac.natacha.food_calendar;
 
-import android.content.Context;
-import android.content.Intent;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.ContextMenu;
-import android.view.LayoutInflater;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,15 +16,11 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.FirebaseDatabase;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,8 +28,6 @@ import java.util.List;
 import uqac.natacha.food_calendar.Modele.Aliment;
 import uqac.natacha.food_calendar.Modele.AlimentQuantifie;
 import uqac.natacha.food_calendar.Modele.ListeDeCourse;
-import uqac.natacha.food_calendar.Modele.ShoppingList;
-import uqac.natacha.food_calendar.Modele.Unite;
 import uqac.natacha.food_calendar.Modele.User;
 
 
@@ -180,26 +169,6 @@ public class StuffList extends AppCompatActivity {
         View view = v;
         MenuInflater menuInflater = getMenuInflater();
         menuInflater.inflate(R.menu.menu_option_shopping_list, menuInner);
-       /* if (view == null){
-            RelativeLayout layout = (RelativeLayout) LayoutInflater.from(getMenuInflater())
-        }
-
-        auth = FirebaseAuth.getInstance();
-        FirebaseUser currentFirebaseUser = auth.getCurrentUser() ;
-        String currentFirebaseUserID = currentFirebaseUser.getUid();
-        db = uqac.natacha.food_calendar.Database.DatabaseManager.getInstance();
-
-
-        db.getUser(currentFirebaseUserID, new uqac.natacha.food_calendar.Database.DatabaseManager.Result<User>() {
-            @Override
-            public void onSuccess(User user) {
-
-                AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInner;
-               itemListArray = user.getListOfShoppingList().get(info.position);
-                menuInner.setHeaderTitle(itemListArray.getNomListeDeCourse());
-                getMenuInflater().inflate(R.menu.menu_option_shopping_list, menuInner);
-            }
-        });*/
 
         super.onCreateContextMenu(menu, v, menuInfo);
     }
@@ -280,107 +249,5 @@ public class StuffList extends AppCompatActivity {
             return convertView;
         }
     }
-
-
-   /* class CustomAdapter extends BaseAdapter{
-
-
-        int count =0;
-        AlimentQuantifie alimentQuantifieCourant = null;
-
-
-
-        @Override
-        public int getCount() {
-
-            auth = FirebaseAuth.getInstance();
-            FirebaseUser currentFirebaseUser = auth.getCurrentUser() ;
-            String currentFirebaseUserID = currentFirebaseUser.getUid();
-            db = uqac.natacha.food_calendar.Database.DatabaseManager.getInstance();
-            db.getUser(currentFirebaseUserID, new uqac.natacha.food_calendar.Database.DatabaseManager.Result<User>() {
-                @Override
-                public void onSuccess(User user) {
-
-                    CustomAdapter.this.count = (user.getListOfShoppingList().get(positionShoppingList).getArticles().size());
-                    Log.i("Custom adapter getCount", "size : " + user.getListOfShoppingList().get(positionShoppingList).getArticles().size());
-                }
-            });
-
-            return  count;
-
-        }
-
-        @Override
-        public Object getItem(int i) {
-
-            iGlob = i;
-
-            Log.i("Custom adapter getItem", "iGlob : " + iGlob);
-
-
-
-
-            auth = FirebaseAuth.getInstance();
-            FirebaseUser currentFirebaseUser = auth.getCurrentUser() ;
-            String currentFirebaseUserID = currentFirebaseUser.getUid();
-            db = uqac.natacha.food_calendar.Database.DatabaseManager.getInstance();
-            db.getUser(currentFirebaseUserID, new uqac.natacha.food_calendar.Database.DatabaseManager.Result<User>() {
-                @Override
-                public void onSuccess(User user) {
-
-                   alimentQuantifieCourant = (user.getListOfShoppingList().get(positionShoppingList).getArticles().get(iGlob));
-                }
-            });
-
-            return alimentQuantifieCourant;
-        }
-
-        @Override
-        public long getItemId(int i) {
-           return 0;
-        }
-
-        @Override
-        public View getView(int i, View view, ViewGroup viewGroup) {
-
-            iGlob =i;
-            view = getLayoutInflater().inflate(R.layout.custom_list_stuff,null);
-
-            imageViewItem = (ImageView ) view.findViewById(R.id.imageViewItem);
-            textViewNameItem = (TextView) view.findViewById(R.id.textView_name);
-            textViewQuantityItem = (TextView) view.findViewById(R.id.textView_quantity);
-            checkBoxOwnItem = (CheckBox) view.findViewById(R.id.checkBox_posseder);
-
-            auth = FirebaseAuth.getInstance();
-            FirebaseUser currentFirebaseUser = auth.getCurrentUser() ;
-            String currentFirebaseUserID = currentFirebaseUser.getUid();
-            db = uqac.natacha.food_calendar.Database.DatabaseManager.getInstance();
-
-            getItem(i);
-            textViewNameItem.setText(alimentQuantifieCourant.getString());
-            getCount();
-
-            textViewQuantityItem.setText(String.valueOf(count));
-
-
-            *//*db.getUser(currentFirebaseUserID, new uqac.natacha.food_calendar.Database.DatabaseManager.Result<User>() {
-                @Override
-                public void onSuccess(User user) {
-                    int position = getIntent().getIntExtra("position", 1);
-                    if (!user.getListOfShoppingList().get(position  ).getArticles().isEmpty() ){
-
-                    textViewNameItem.setText(user.getListOfShoppingList().get(position).getArticles().get(iGlob).getString());
-                    textViewQuantityItem.setText(String.valueOf( user.getListOfShoppingList().get(position).getArticles().get(iGlob).getQuantite()));
-
-                    }
-                }
-            });*//*
-
-
-            return view;
-        }
-    }*/
-
-
 
 }

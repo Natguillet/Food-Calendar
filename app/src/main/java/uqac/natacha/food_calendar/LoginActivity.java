@@ -31,10 +31,6 @@ import butterknife.ButterKnife;
 import uqac.natacha.food_calendar.Database.DatabaseManager;
 import uqac.natacha.food_calendar.Modele.User;
 
-/**
- * Created by Florian on 24/10/2017.
- */
-
 
 public class LoginActivity extends AppCompatActivity {
 
