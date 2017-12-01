@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.45"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp">
+        <EditText
+            android:id="@+id/eti_instruction"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/instructions"
+            android:inputType="text"
+            android:textColor="@color/colorFontDark" />
+    </android.support.design.widget.TextInputLayout>
+
+    <ImageButton
+        android:id="@+id/ibtn_delete_food"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.05"
+        app:srcCompat="@drawable/ic_clear"
+        android:layout_gravity="center_vertical"
+        android:onClick="onDeleteInstruction"/>
+
+</LinearLayout>

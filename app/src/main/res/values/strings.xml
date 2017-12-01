@@ -1,4 +1,5 @@
 <resources>
+    <!-- Accueil_layout -->
     <string name="app_name">FoodCalendar</string>
     <string name="connexion">Connexion</string>
     <string name="pseudo">Adresse e-mail</string>
@@ -6,6 +7,24 @@
     <string name="inscription">INSCRIPTION</string>
     <string name="s_inscrire">S\'inscrire</string>
     <string name="confirmer_mdp">Confirmer votre mot de passe</string>
+
+    <!-- Categories_recettes_layout -->
+    <string name="entree">Entrée</string>
+    <string name="plat_principal">Plat principal</string>
+    <string name="dessert">Dessert</string>
+    <string name="title">Titre de la recette</string>
+    <string name="category">Catégorie</string>
+    <string name="addRecipe">Ajouter Recette</string>
+    <string name="ingredients">Ingrédients</string>
+    <string name="instructions">Instructions</string>
+    <string name="quantity">Quantité</string>
+    <string name="step">Etape</string>
+    <string name="info">Informations</string>
+    <string name="number">Nombre de portions</string>
+    <string name="difficultyadd">Difficulté (sur 5)</string>
+    <string name="preparation">Temps de préparation</string>
+    <string name="preparationTime">Préparation (en mn)</string>
+    <string name="cookingTime">Cuisson (en mn)</string>
     <string name="title_activity_calendar">CalendarActivity</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
