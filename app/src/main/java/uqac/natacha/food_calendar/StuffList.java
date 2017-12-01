@@ -119,7 +119,7 @@ public class StuffList extends AppCompatActivity {
                                                 new Aliment(
                                                         editText_stuff.getText().toString()
                                                         , 1
-                                                        , Unite.UNITE)
+                                                        , "unité")
                                                 ,Integer.parseInt(editText_quantity.getText().toString() )));
 
                                 db.setUser(user);
