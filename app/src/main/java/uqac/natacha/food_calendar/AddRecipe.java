@@ -251,11 +251,11 @@ public class AddRecipe extends AppCompatActivity {
                 }
             });
 
-            Intent intent = new Intent(getApplicationContext(), Accueil.class);
+            Intent intent = new Intent(getApplicationContext(), CalendarActivity.class);
             startActivity(intent);
 
         } else {
-            Toast.makeText(this,"Remplir yous les champs", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this,"Remplir tous les champs", Toast.LENGTH_SHORT).show();
         }
     }
 
