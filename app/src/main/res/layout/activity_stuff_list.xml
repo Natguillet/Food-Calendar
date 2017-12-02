@@ -34,6 +34,7 @@
             android:id="@+id/button_addStuff"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:background="@color/colorAccent"
             android:text="add" />
 
     </LinearLayout>
@@ -71,7 +72,6 @@
     </LinearLayout>
 
     <ListView
-       android:theme="@style/Base.V7.Theme.AppCompat.Light"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/item_list_view"></ListView>

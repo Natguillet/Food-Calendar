@@ -31,7 +31,6 @@
             >
 
             <TextView
-                android:textColor="@color/colorAccent"
                 android:id="@+id/textView_name"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -44,7 +43,6 @@
 
 
             <TextView
-                android:textColor="@color/colorAccent"
                 android:id="@+id/textView_quantity"
                 android:layout_width="match_parent"
                 android:gravity="center"
