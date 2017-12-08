@@ -12,7 +12,6 @@ public class Aliment implements Comparable<Aliment> {
     private double caloriesParUnite;
     private String  unite;
 
-
     public Aliment() {
     }
 

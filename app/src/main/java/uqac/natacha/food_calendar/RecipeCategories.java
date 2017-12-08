@@ -44,4 +44,9 @@ public class RecipeCategories extends AppCompatActivity {
         intent.putExtra("CATEGORY", categoryExtra);
         startActivity(intent);
     }
+
+    public void addRecipe(View view) {
+        Intent intent = new Intent(this, AddRecipe.class);
+        startActivity(intent);
+    }
 }

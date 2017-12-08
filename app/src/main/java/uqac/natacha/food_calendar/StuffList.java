@@ -1,14 +1,9 @@
 package uqac.natacha.food_calendar;
 
-import android.content.Context;
-import android.content.Intent;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.ContextMenu;
-import android.view.LayoutInflater;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,15 +16,11 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.FirebaseDatabase;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,8 +28,6 @@ import java.util.List;
 import uqac.natacha.food_calendar.Modele.Aliment;
 import uqac.natacha.food_calendar.Modele.AlimentQuantifie;
 import uqac.natacha.food_calendar.Modele.ListeDeCourse;
-import uqac.natacha.food_calendar.Modele.ShoppingList;
-import uqac.natacha.food_calendar.Modele.Unite;
 import uqac.natacha.food_calendar.Modele.User;
 
 

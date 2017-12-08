@@ -6,55 +6,47 @@
     android:layout_height="match_parent"
     tools:context="uqac.natacha.food_calendar.DayActivity">
 
-<LinearLayout
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-
-    <RelativeLayout
-        android:layout_marginTop="25dp"
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_height="match_parent">
 
-        <TextView
 
-            android:textColor="@color/colorAccent"
-            android:id="@+id/date"
-            android:layout_width="wrap_content"
-            android:textStyle="bold"
-            android:layout_toLeftOf="@id/floatingActionButton_add"
-            android:text="Your recipe list"
-            android:textSize="35dp"
-            android:layout_height="50dp"
-            android:layout_centerInParent="true"
-            android:layout_alignParentLeft="true"
-            android:layout_marginLeft="15dp"/>
-
-        <android.support.design.widget.FloatingActionButton
-            android:layout_alignParentRight="true"
-            android:layout_centerInParent="true"
-            android:id="@+id/floatingActionButtonAddRepas"
+        <RelativeLayout
+            android:layout_marginTop="25dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginRight="10dp"
-            android:clickable="true"
-            app:srcCompat="@android:drawable/ic_input_add" />
-
-    </RelativeLayout>
-
-    <ListView
-        android:paddingTop="20dp"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/menu_list_views"
-        android:layout_above="@id/floatingActionButtonAddRepas">
-    </ListView>
+            android:orientation="horizontal">
 
 
 
-</LinearLayout>
+            <TextView
+
+                android:textColor="@color/colorAccent"
+                android:id="@+id/date"
+                android:layout_width="wrap_content"
+                android:textStyle="bold"
+                android:text="Your recipe list"
+                android:textSize="35dp"
+                android:layout_height="50dp"
+                android:layout_centerInParent="true"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="15dp"/>
+
+
+        </RelativeLayout>
+
+        <ListView
+            android:paddingTop="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/menu_list_views"
+            >
+        </ListView>
+
+
+
+    </LinearLayout>
 
 
 

@@ -10,6 +10,9 @@ public class AlimentQuantifie {
     private Aliment aliment;
     private double  quantite;
 
+    public AlimentQuantifie() {
+    }
+
     public String getName() {
         return name;
     }
@@ -34,8 +37,6 @@ public class AlimentQuantifie {
         this.quantite = quantite;
     }
 
-    public AlimentQuantifie() {
-    }
 
     /* ***************************************************************************************** **
      *                             G E T T E R    &    S E T T E R                                *

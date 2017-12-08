@@ -35,15 +35,9 @@ public class DayActivity extends AppCompatActivity {
         Intent incoming = getIntent();
         String date = incoming.getStringExtra("date");
         thedate.setText(date);
-        mFloatingActionButton = (FloatingActionButton) findViewById(R.id.floatingActionButtonAddRepas);
+        //mFloatingActionButton = (FloatingActionButton) findViewById(R.id.floatingActionButton_add);
         menuListView = (ListView) findViewById(R.id.menu_list_views);
 
-        mFloatingActionButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
     }
 
     public void updateView(){
@@ -57,7 +51,10 @@ public class DayActivity extends AppCompatActivity {
             public void onSuccess(User user) {
 
                 List<String> ARcourante = new ArrayList<>();
-                ARcourante = user.getNomRepas();
+                ARcourante.add("Petit déjeuner");
+                ARcourante.add("Déjeuner");
+                ARcourante.add("Dîner");
+                ARcourante.add("Souper");
 
                 if(ARcourante != null){
                     ArrayAdapter<String> adapter = new ArrayAdapter<String>(DayActivity.this, android.R.layout.simple_list_item_1, ARcourante);

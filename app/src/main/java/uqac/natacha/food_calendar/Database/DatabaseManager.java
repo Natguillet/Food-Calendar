@@ -9,22 +9,12 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.ArrayList;
-import java.util.Map;
-
 import uqac.natacha.food_calendar.Modele.User;
 
-/**
- * Created by Natiassa on 2017-11-30.
- */
 
 public class DatabaseManager {
 
     private final static String USERS = "users";
-
-    public User getUser() {
-        return user;
-    }
 
     private  User user;
 
@@ -74,41 +64,6 @@ public class DatabaseManager {
         return ref.users.child(user.getUid()).setValue(user);
     }
 
-    public void addUserEventListener(final String uid, final ResultListener<User> result)
-    {
-        if (result.listener == null) {
-            result.listener = new ValueEventListener()
-            {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot)
-                {
-                    User  user = dataSnapshot.getValue(User.class);
-                    if (user != null) {
-                        result.onSuccess(user.setUid(uid));
-                    } else {
-                        result.onFailure();
-                    }
-                }
-
-                @Override
-                public void onCancelled(DatabaseError databaseError)
-                {
-                    result.onError(databaseError);
-                }
-            };
-        }
-
-        if (!result.added) {
-            ref.users.child(uid).addValueEventListener(result.listener);
-            result.added = true;
-        }
-    }
-
-    public void removeUserEventListener(final String uid, final ResultListener<User> result)
-    {
-        ref.users.child(uid).removeEventListener(result.listener);
-        result.added = false;
-    }
 
     // ----- INNER CLASS ----- //
 
@@ -141,15 +96,4 @@ public class DatabaseManager {
         };
     }
 
-    public static abstract class ResultListener<T> extends Result<T>
-    {
-        private boolean added;
-        private ValueEventListener listener;
-
-        public ResultListener<T> setListener(ValueEventListener listener)
-        {
-            this.listener = listener;
-            return this;
-        }
-    }
 }

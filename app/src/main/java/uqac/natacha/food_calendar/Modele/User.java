@@ -3,7 +3,6 @@ package uqac.natacha.food_calendar.Modele;
 import com.google.firebase.database.Exclude;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by Natiassa on 2017-11-30.
@@ -22,19 +21,9 @@ public class User {
     private int size;
     private ArrayList<ListeDeCourse> listOfShoppingList;
 
-    public List<String> getNomRepas() {
-        return nomRepas;
-    }
-
-    public void setNomRepas(List<String> nomRepas) {
-        this.nomRepas = nomRepas;
-    }
-
-    private List<String> nomRepas;
-
     public User() {}
 
-    public User(String uid, String email, String gender, String levelActivity, int nbMeals, double weight, int size, ArrayList<ListeDeCourse> listOfShoppingList, List<String> nomRepas) {
+    public User(String uid, String email, String gender, String levelActivity, int nbMeals, double weight, int size, ArrayList<ListeDeCourse> listOfShoppingList) {
         this.uid = uid;
         this.email = email;
         this.gender = gender;
@@ -43,7 +32,6 @@ public class User {
         this.weight = weight;
         this.size = size;
         this.listOfShoppingList = new ArrayList<>();
-        this.nomRepas=nomRepas;
     }
     public User(String uid, String email, String gender, String levelActivity, int nbMeals, double weight, int size) {
         this.uid = uid;
@@ -86,15 +74,12 @@ public class User {
 
     //ajoute une liste de course à la liste de liste de course de l'utilisateur
     public void addShoppingListInListOfShoppingList(ListeDeCourse listeDeCourse){
-
-        if (this.listOfShoppingList == null){
+        if (listOfShoppingList == null) {
             this.listOfShoppingList = new ArrayList<>();
             this.listOfShoppingList.add(listeDeCourse);
-        }
-        else{
+        } else {
             this.listOfShoppingList.add(listeDeCourse);
         }
-
     }
 
 
