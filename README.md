@@ -1,2 +1,1 @@
-# Food-Calendar.
-# Application
+# Free AI at api.airforce
